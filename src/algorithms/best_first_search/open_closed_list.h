@@ -514,7 +514,7 @@ NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
 
     if (open_list_heap.size() > 1) {
         for (i = 1; i < open_list_heap.size(); i++) {
-            BFSNode cur_node = open_list_heap[i];
+            BFSNode<state_t, action_t> cur_node = open_list_heap[i];
             if (cur_node.eval < min_val) {
                 min_val = cur_node.eval;
                 min_g = cur_node.g_cost;
