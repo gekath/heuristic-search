@@ -253,7 +253,7 @@ BfsExpansionResult BestFirstSearch<state_t, action_t>::nodeExpansion()
             double child_eval = nodeEval(child_state, child_g, child_h);
 
             //std::cout << "New Child " << child_state << " eval " << child_eval << std::endl;
-            open_closed_list.addLowGToOpen(child_state, app_actions[i], child_hash, child_g, child_h, child_eval,
+            open_closed_list.addHighGToOpen(child_state, app_actions[i], child_hash, child_g, child_h, child_eval,
                     to_expand_id);
         }
     }
