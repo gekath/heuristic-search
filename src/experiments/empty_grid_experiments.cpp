@@ -29,6 +29,7 @@ int main(int argc, char **argv)
         tieBreaker = atoi(argv[2]);
     }
 
+    cout << argc << endl;
     cout << tieBreaker << endl;
 
     AStar<MapLocation, MapDir> a_star;
