@@ -81,7 +81,7 @@ public:
      */
     void setHeuristic(Heuristic<state_t> *heur);
 
-    void setTieBreaker(NodeID<state_t, action_t, StateHash, double, double, double, NodeID> *tiebreaker);
+    // void setTieBreaker(NodeID<state_t, action_t, StateHash, double, double, double, NodeID> *tiebreaker);
 
     /**
      * Returns the number of unique goal tests.
