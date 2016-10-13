@@ -11,6 +11,7 @@
 #include "../domains/map_pathfinding/map_pathfinding_transitions.h"
 #include "../domains/map_pathfinding/map_manhattan_distance.h"
 #include "../domains/map_pathfinding/map_loc_hash_function.h"
+#include "../domains/map_pathfinding/map_utils.h"
 #include "../generic_defs/non_goal_heuristic.h"
 #include "../generic_defs/single_goal_test.h"
 #include "../algorithms/best_first_search/a_star.h"
