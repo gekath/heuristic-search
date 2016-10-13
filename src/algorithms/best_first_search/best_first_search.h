@@ -190,7 +190,7 @@ BfsExpansionResult BestFirstSearch<state_t, action_t>::nodeExpansion()
     if(open_closed_list.isOpenEmpty())
         return BfsExpansionResult::empty_open;
 
-    NodeID to_expand_id = open_closed_list.getLowGAndClose();
+    NodeID to_expand_id = open_closed_list.getHighGAndClose();
 
     BFSNode<state_t, action_t> to_expand_node = open_closed_list.getNode(to_expand_id);
     //std::cout << "Expanding " << to_expand_id << " - " << to_expand_node.state << "," << to_expand_node.gen_action << std::endl;

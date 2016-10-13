@@ -174,6 +174,8 @@ public:
 
     virtual NodeID getLowGAndClose();
 
+    virtual NodeID getHighGAndClose();
+
     /**
      * Adjusts the open list as needed because the node evaluation of the node with the given id has changed.
      *
@@ -523,6 +525,48 @@ NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
                 if (cur_node.g_cost < min_g) {
                     min_val = cur_node.eval;
                     min_g = cur_node.g_cost;
+                    min_idx = i;
+                } 
+            }
+        }
+    }
+
+    NodeID best_id = open_list_heap[min_idx];
+    node_table[best_id].in_open = false;
+
+    open_list_heap[min_idx] = open_list_heap.back();
+    node_table.getNode(open_list_heap[min_idx]).location = 0;
+    open_list_heap.pop_back();
+
+    heapifyDown(min_idx);
+
+    std::cout << getNode(best_id).eval << std::endl;
+
+    return best_id;
+}
+
+template<class state_t, class action_t>
+NodeID OpenClosedList<state_t, action_t>::getHighGAndClose()
+{
+
+    assert(!open_list_heap.empty());
+
+    unsigned int i;
+    int min_idx = 0;
+    double min_val = getNode(open_list_heap[0]).eval;
+    double max_g = getNode(open_list_heap[0]).g_cost;
+
+    if (open_list_heap.size() > 1) {
+        for (i = 1; i < open_list_heap.size(); i++) {
+            BFSNode<state_t, action_t> cur_node = getNode(open_list_heap[i]);
+            if (cur_node.eval < min_val) {
+                min_val = cur_node.eval;
+                max_g = cur_node.g_cost;
+                min_idx = i;
+            } else if (cur_node.eval == min_val) {
+                if (cur_node.g_cost > max_g) {
+                    min_val = cur_node.eval;
+                    max_g = cur_node.g_cost;
                     min_idx = i;
                 } 
             }
