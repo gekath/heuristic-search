@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 
     // default 0, low g 1, high g 2
     int tieBreaker = 0;
-    if (argc > 2) {
+    if (argc > 1) {
         tieBreaker = atoi(argv[2]);
     }
 
