@@ -51,6 +51,7 @@ int main(int argc, char **argv)
     map_hash.setMapDimensions(map_ops);
 
     a_star.setHeuristic(&manhattan);
+    // a_star.setTieBreaker(&default);
 
     starts.clear();
     goals.clear();
