@@ -43,7 +43,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    cout << 'Loaded empty grid' << endl;
+    cout << "Loaded empty grid"" << endl;
 
     map_ops.set4Connected();
     map_hash.setMapDimensions(map_ops);
