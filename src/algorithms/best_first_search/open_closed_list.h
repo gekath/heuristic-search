@@ -540,8 +540,6 @@ NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
 
     heapifyDown(min_idx);
 
-    std::cout << getNode(best_id).eval << std::endl;
-
     return best_id;
 }
 
@@ -581,8 +579,6 @@ NodeID OpenClosedList<state_t, action_t>::getHighGAndClose()
     open_list_heap.pop_back();
 
     heapifyDown(min_idx);
-
-    std::cout << getNode(best_id).eval << std::endl;
 
     return best_id;
 }
