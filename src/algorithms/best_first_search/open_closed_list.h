@@ -347,14 +347,21 @@ NodeID OpenClosedList<state_t, action_t>::addLowGToOpen(const state_t& state, co
         std::cout << "eval" << i << "\t" << getNode(open_list_heap[i]).eval << "\t" << node_eval << std::endl;
         std::cout << "g" << i << "\t" << getNode(open_list_heap[i]).g_cost << "\t" << g << std::endl;
 
+
+        // Iterate from the end of the list. Appending new costs, should be at least the cost of 
+        // the last item in the open list. 
+
+        // If not equal, just append to the end
         if (!fp_equal(getNode(open_list_heap[i]).eval, node_eval)) {
+
+            std::cout << it.base() << std::endl;
             break;
         } else if (fp_less(g, getNode(open_list_heap[i]).g_cost)){
             // std::cout << "here" << std::endl;
             break;
         }
     }
-    
+
     open_list_heap.insert(it.base(), new_id);
 
     heapifyUp(open_list_heap.size() - 1);
