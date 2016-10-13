@@ -340,7 +340,6 @@ NodeID OpenClosedList<state_t, action_t>::addLowGToOpen(const state_t& state, co
 
     std::vector<unsigned int>::reverse_iterator it;
 
-
     for (it = open_list_heap.rbegin(); it != open_list_heap.rend(); ++it) {
 
         unsigned int i = it.base() - open_list_heap.begin() - 1;
@@ -354,7 +353,7 @@ NodeID OpenClosedList<state_t, action_t>::addLowGToOpen(const state_t& state, co
         // If not equal, just append to the end
         if (!fp_equal(getNode(open_list_heap[i]).eval, node_eval)) {
 
-            std::cout << it.base() << std::endl;
+            // std::cout << it.base() << std::endl;
             break;
         } else if (fp_less(g, getNode(open_list_heap[i]).g_cost)){
             // std::cout << "here" << std::endl;
