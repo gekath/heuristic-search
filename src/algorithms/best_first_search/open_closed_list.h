@@ -382,19 +382,27 @@ NodeID OpenClosedList<state_t, action_t>::addHighGToOpen(const state_t& state, c
     //std::cout << "Node Table Size " << node_table.size() << std::endl;
 
     std::vector<unsigned int>::reverse_iterator it;
-    it = open_list_heap.rbegin();
 
     for (it = open_list_heap.rbegin(); it != open_list_heap.rend(); ++it) {
 
-        unsigned int i;
-        i = it.base() - open_list_heap.begin() - 1;
-        std::cout << i << std::endl;
+        unsigned int i = it.base() - open_list_heap.begin() - 1;
+        // std::cout << "eval" << i << "\t" << getNode(open_list_heap[i]).eval << "\t" << node_eval << std::endl;
+        // std::cout << "g" << i << "\t" << getNode(open_list_heap[i]).g_cost << "\t" << g << std::endl;
 
-        if (fp_equal(getNode(open_list_heap[i]).eval, node_eval) && fp_greater(g, getNode(open_list_heap[i]).g_cost)){
+
+        // Iterate from the end of the list. Appending new costs, should be at least the cost of 
+        // the last item in the open list. 
+
+        // If not equal, just append to the end
+        if (!fp_equal(getNode(open_list_heap[i]).eval, node_eval)) {
+
+            // std::cout << it.base() << std::endl;
+            break;
+        } else if (!fp_less(g, getNode(open_list_heap[i]).g_cost)){
+            // std::cout << "here" << std::endl;
             break;
         }
     }
-
     open_list_heap.insert(it.base(), new_id);
     
     heapifyUp(open_list_heap.size() - 1);
