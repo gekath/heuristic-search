@@ -508,9 +508,9 @@ NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
     assert(!open_list_heap.empty());
 
     unsigned int i;
-    min_idx = 0;
-    min_val = getNode(open_list_heap[0]).eval;
-    min_g = getNode(open_list_heap[0]).g_cost;
+    int min_idx = 0;
+    double min_val = getNode(open_list_heap[0]).eval;
+    double min_g = getNode(open_list_heap[0]).g_cost;
 
     if open_list_heap.size() > 1 {
         for (i = 1; i < open_list_heap.size(); i++) {
