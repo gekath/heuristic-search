@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <vector>
 #include <cstdint>
+#include <stdlib.h>
 
 #include "../domains/map_pathfinding/map_pathfinding_transitions.h"
 #include "../domains/map_pathfinding/map_manhattan_distance.h"
@@ -25,7 +26,7 @@ int main(int argc, char **argv)
     // default 0, low g 1, high g 2
     int tieBreaker = 0;
     if (argc > 2) {
-        tieBreaker = argv[2];
+        tieBreaker = atoi(argv[2]);
     }
 
     cout << tieBreaker << endl;
