@@ -1,0 +1,251 @@
+/*! \mainpage
+\tableofcontents
+
+This document provides information on using the given framework for the assignment. If you are not using this
+framework for your assignment, please see see \ref file_input_formats_page regarding the format of the files
+you are supposed to use for experiments. If you are using this framework for the assignment, this page will
+describe how to compile and run the relevant experiment files. You will also want to see information on the
+architecture of the framework at the page \ref framework_architecture_page, and tips on how to implement the 
+parts needed for the assignment on the \ref assignment_tips_page page. If you are less familiar with
+C++, we have included the following \ref cplusplus_tips_page page. Finally, \ref code_conventions_page
+lists some information on the coding conventions that were used.
+
+\section setting_up_sec Compiling the System
+
+To compile the code in the framework, go into the subdirectory called 'build' and run 'make'. The code assumes that
+you have g++ installed. Testing suggests it should run on most Linux systems provided your version of g++ is new 
+enough. We have tested to ensure that it compiles successfully on the CDF system, so that is one option as a place
+to run your experiments.
+
+If you have issues compiling on a Linux machine, it may just be that the wrong includes are used for the system
+in question. Please post any such issues to Piazza, as other students in the class may have suggestions for how
+to fix the issue. We will also try to aide in any problems that come up
+
+We make no guarantees that it will run on a Mac or Windows platform, and we won't be providing much troubleshooting
+in those cases. However, early tests suggest it may run successfuly on Macs (though minor tweaks may be necessary).
+
+\section running_sec Running Experiments
+ 
+Compiling the code will create a number of '.obj' files in the 'obj' subdirectory. These are the object files for 
+the problem that are linked together to create the three binaries you will use to run your experiments. These
+binaries are in the 'bin' folder. They each correspond to experiments on a different domain. More information on
+these is fiven below.
+
+\subsection tiles_subsec Tile Puzzle Experiments
+
+The binary for the tile puzzle experiments is called 'tiles'. This binary runs the code in the file 
+'src/experiments/tile_experiments.cpp'. This code that is there currently runs a standard
+A* instance on 100 sliding tile puzzles with 3 rows and 4 columns, and prints out the optimal cost of each problem
+as well as the number of node expansions and unique node expansions on each problem. These problems are the same 
+ones you are to use for your experiments.
+
+\subsection starcraft_subsec Starcraft Map Experiments
+
+The binary for running pathfinding experiments on the provided map 'starcraft_bgh.map' is called 'starcraft_map'.
+This binary runs the code in the file 'src/experiments/starcraft_map_experiments.cpp'.
+This code currently runs a standard A* instance on 100 pathfinding problems in this domain, and prints out the
+optimal cost of each problem as well as the number of node expansions and unique node expansions on each problem.
+These problems are the sames ones you are to use for your experiments.
+
+\subsection empty_grid_subsec Empty Grid Experiments
+
+The binary for running pathfinding experiments on an empty grid is called 'empty_map'. This code currently loads
+in a map that doesn't exist called 'empty_grid.map'. You will need to build such a map to complete the assignment.
+You will also need to set up the required experiments. See the 'src/experiments/starcraft_map_experiments.cpp'
+file to see how to properly set up a map pathfinding experiment on a loaded map.
+
+*/
+
+/*! \page file_input_formats_page File Input Formats
+
+Below, we describe the various input file formats. This information will be needed both for those using
+the provided framework, or for those doing all the coding themselves.
+
+\section map_format_sec Map Pathfinding File Formats
+
+There are two types of files relevant for map pathfinding. The first is the map file. The format of this file is
+as follows (see 'src/domains/map_pathfinding/map_files/starcraft_bgh.map' for an example). There must be a line that 
+contains only the word "map", which indicates that the remainder of the file 
+is a representation of the map. An empty location is indicated by any of the symbols '.' 'G' or 'S'. An obstacle is 
+indicated by any of the symbols '@', 'O', 'W', or 'T.' Any other symbol will cause an error.
+
+Prior to the line that says map, there must be at least two lines, one of which is of the form "width n" and the 
+other of which is "height m", where n and m are positive integers. These indicate the size of the map. The reading will
+fail if these are not included.  All other lines before the "map" line will be discarded.
+
+The second relevant type of file is the problem files (see 'src/domains/map_pathfinding/map_files/starcraft_bgh.probs' 
+for an example). Each line of this file represents a different problem. The first two numbers of each line are the x
+and y coordinates of the start location. The second two numbers are the x and y coordinates of the goal location.
+Note that the top-left location is denoted by (0, 0) and the location immediately below it is denoted by (0, 1).
+
+\section tile_probs Sliding Tile Puzzle Problems
+
+For sliding tile problems, there is a single file format (see 'src/domains/tile_puzzle/tile_files/3x4_puzzle.probs'
+for an example. Each line of these file gives a different permutation, which can be used as the start state for
+sliding tile puzzle experiments. The numbers listed are separated by a blank, where the i-th number appearing indicates
+the value of the i-th entry in the permutation.
+*/
+
+/*! \page  assignment_tips_page Assignment Tips
+
+To avoid you from having to learn the whole framework for the assignment, the following are some tips to help focus
+your examination of the codebase.
+
+- For tie-breaking, look at the OpenClosedList where nodes are compared when deciding on their location in the open list heap.
+- For WA* and GBFS, you will want to look at the way A* is implemented.
+- For the re-expansion experiments, look at the BestFirstSearch class, for how nodes are re-opened.
+*/
+
+/*! \page code_conventions_page Code Conventions
+
+Below is a list of the conventions used in the code. Some may be changed at a later date (enoted by TODO)
+
+- Header files have extension .h, while source files have extension .cpp
+- File names are all in lower case, with underscores delimiting words (ie. transition_system.h)
+- Class names are in camel case, with the first letter capitalized.
+- Member functions are in camel case, with the first letter uncapitalized.
+- Member and local variables are in lower case, with underscores delimiting words.
+- Non-member functions are in lower case, with underscores delimiting words. TODO: Is this really the best idea?
+- TODO: Should we have a source file for all files including abstract files? Two files for each?
+- TODO: Where to put the code in a templated function? Do the .cpp "include" hack? Does this work with non-class files with a mix of templated and untemplated functions?
+
+*/
+
+/*! \page cplusplus_tips_page C++ Tips
+
+This page is not intended to teach you C++, but can give you some quick tips on things that may be unfamiliar. Most of these will not
+matter for the implementation work you will have to do for the assignment, but may help when reading the code.
+
+\section template_sec Templates
+
+First, be aware that the code is intended to allow for quickly implementing new domains and running existing algorithms on them.
+As such, there is extensive use of templates. Classes that use templates begin their class definition with 'template<class T>'.
+This means that the defined code can be used for various different types. 'T' is just a standin for whatever type you will use.
+For example, the vector class is defined as vector<T> since it is a container that can hold just about anything. To create a 
+vector for 'double' values, you would write vector<double>. Our class definitions would work similarly.
+
+Of particular note, you may recall that in C one usually puts the function definition in a header file and the function implentation
+in another file (usually a '.c' file). Templated functions and classes don't allow for this (the reason why is technical), so the 
+implmentations of these will be  in the header file for such templated cases.
+
+\section inheritance_sec Inheritance
+
+The codebase also uses inheritance to separate parts of the search algorithms that are in common. For example, in best_first_search.h, you can see the following:
+
+template<class state_t, class action_t>\n
+class BestFirstSearch: public SearchEngine<state_t, action_t>
+
+This says that the BestFirstSearch class inherits from SearchEngine using template types state_t and action_t.
+
+You will see functions designated as 'virtual', which means that the function can be overloaded in a child class, and when this is done, call the
+child's version of the function by default. If the function definition has '= 0' at the end, this means it is an abstract function in an abstract
+class.
+
+Of note, mixing inheritance and templates can get a bit ugly at times. In particular, while one can usually access the parents protected or public
+member variables or functions from a child, you have to be a bit more explicit when templates are involved. For example, at the beginning of the 
+definition of best_first_search.h you will see the following:
+
+using SearchEngine<state_t, action_t>::goal_test;
+
+This means that when 'goal_test' is used to in the BestFirstSearch code, it refers to the member variable 'goal_test' from the parent class
+SearchEngine.
+
+\section other_sec Other
+
+This section just contains a number of particular quick notes.
+
+- By default, functions take copies of an object when given a parameter. The '&' sign specifies that a reference should be used instead. For
+example, if the parameter is 'int &i' and 'i' is changed within the function, 'i' will remain changed after the function returns.  
+- The number of bits used to denote different primitive datatypes can differ from system to system. When something more specific is desired, 
+there are special data types for this. For example, 'uint64_t' is an unsigned 64-bit integer.
+- 'enum class' always for the definition of a finite set of constants. For example, it is used to define the type for moves in the sliding
+ tile puzzle in tile_puzzle_transitions.h since there is only a very limited number of such moves.
+- 'typedef' allows you to give an alias to a type to make reading the code more easily. For example, in state_hash_function.h, you will see 
+that a 'StateHash' is defined as an unsigned 64-bit integer. This allows our hash function to return a 'StateHash' instead of 'uint64_t'
+- 'const' is used throughout, and it is a keyword that means many different things depending on the context. This framework more commonly uses it 
+in two contexts. At the end of a class function, like 'unsigned getValue() const', it means that the function will not affect any of the member 
+variables of the function. In a parameter, it is most commonly used as 'void myFunction(const vector<unsigned> &v)', which means that 'v' is
+passed as a reference to the function, but can not be changed during the function.
+- Anything else should generally be Google-able.
+*/
+
+/*! \page framework_architecture_page Framework Architecture
+
+This section provides a brief description of the architecture of the provided framework. 
+
+\section directory_sec Directories
+
+The framework has a number of directories at the highest level. 'bin' holds the binaries, 'build' holds the compile information (as just a 
+Makefile at the moment), 'obj' holds the object files created during compilation, 'docs' holds the information used to document the framework 
+(in Doxygen) and the documentation itself when Doxygen is called, and 'src' which holds the bulk of the C++ source code.
+
+'src' has a number of main directories as well. 'generic_defs' holds a number of generic definitions, often used as abstract classes for other
+parts of the framework. 'utils' has various utility files. 'algorithms' holds subdirectories for the different search algorithms. 'domains'
+holds subdirectories, one for each domain. 'experiments' holds the '.cpp' files that have 'main' functions and can be compiled into runnable
+binaries.
+
+\section domain_sec Constructing a Domain
+
+The heart of the framework is in the ability to easily add new domains. Domains are defined by a description of the state and applicable
+actions (each as a separate class or type), and then a number of different components. First, a goal test function must be created, which
+inherits from the abstract GoalTestFunction. Domains must also have a transition system which denotes what actions are applicable in
+any state. This system must inherit from TransitionSystem.
+
+A generic goal test function called SingleGoalTest is provided which can be used if there is a single goal state. In that case, the test
+simply checks if the given state is the stored state.
+
+\subsection domain_ex_subsec Example Domain
+
+As an example domain, consider two dimensional map pathfinding. For this domain, the MapLocation class defines a state in the domain as an x and
+y coordinate in a map. The 'enum' MapDir provides a list of the possible actions applicable in any state, including the one-step movements
+in the cardinal directions North, East, South, and West, as well as the diagonal moves in relevant problems. The transition system for
+map pathfinding is defined by MapPathfindingTransitions, which loads in a map and can be used to determine which actions are applicable in
+any particular map location. This object can be set as 4-connected (only cardinal moves are allowed) or 8-connected (diagonal moves are also
+allowed).
+
+Finally, we can create a SingleGoalTest with template argument MapLocation to build our goal test for this domain. We can then set the goal 
+of this test, so that it returns true if and only if we have arrived at the desired map location.
+
+\section algorithm_sec Algorithms
+
+All search algorithms must inherit from SearchEngine which defines the common properties of different search algorithms. Of note, to call
+for a search, the user will use the 'getPlan' function, but all search algorithms should overload 'searchForPlan'. 'getPlan' will call
+'searchForPlan' after calling all necessary initialization methods and checks that the algorithm is properly configured.
+
+Abstract classes have also been provided for items such as a Heuristic and StateHashFunction, which are common across many different
+algorithms.
+
+\subsection alg_ex_subsec Example Algorithm
+
+As an example algorithm, consider A*. For this algorithm, we have defined BestFirstSearch which is the code shared between various versions
+of best-first search. This code uses a NodeTable to check what states have been visited, and an OpenClosedList to store the nodes in the 
+open and closed list. BestFirstSearch requires a Heuristic to be set using the setHeuristic function, as well as a StateHashFunction to be 
+set using setHashFunction. 
+
+BestFirstSearch is an abstract class, with a pure abstract function in nodeEval that defines the evaluation function. AStar is an 
+instantiation of BestFirstSearch where this function is defined.
+
+If we wanted to run A* for two dimentional map pathfinding, we would need the components described in \ref domain_ex_subsec, along with a 
+heuristic and hash function. For the heuristic, we can use MapManhattanDistance for 4-connected maps or MapOctileDistance for 8-connected
+maps. To use this function, a goal must be set, with (0,0) being used by default. The MapLocHashFunction then provides a hash function for
+the A* code to use. To use this function, the dimensions of the map must be set.
+
+An A* instance can then be run on a given problem by calling 'getPlan' on a given initial MapLocation.
+
+\section extra_sec Additional Information
+
+This section just lists some additional important information.
+
+- string_utils.h has several functions that simplify inputting and outputting files.
+- combinatorics.h has several functions for handling permutations, or combinatorial structures.
+- floating_point_utils.h has functions for doing reasonable floating point arithmetic comparisons. In particular, when comparing
+two floating point values, fp_less, fp_greater, and fp_equal should be used instead of <, >, and ==. This is to avoid precision errors.
+*/
+
+/*! \page acknowledgements_page Acknowledgements
+
+This framework is inspired by, and uses many similar approaches as Nathan Sturtevant's HOG2 system. The map pathfinding input files also use
+Nathan's standard benchmark notation (or at least a simplification for now).
+
+Some of the underlying ideas come from experience using Fast Downward.
+*/
