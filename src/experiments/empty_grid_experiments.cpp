@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     map_ops.set4Connected();
     map_hash.setMapDimensions(map_ops);
 
-    // a_star.setHeuristic(&manhattan);
+    a_star.setHeuristic(&manhattan);
 
     starts.clear();
     goals.clear();
