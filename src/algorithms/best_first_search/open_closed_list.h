@@ -172,6 +172,8 @@ public:
      */
     virtual NodeID getBestNodeAndClose();
 
+    virtual NodeID getLowGNodeAndClose();
+
     /**
      * Adjusts the open list as needed because the node evaluation of the node with the given id has changed.
      *
@@ -499,37 +501,47 @@ NodeID OpenClosedList<state_t, action_t>::getBestNodeAndClose()
     return best_id;
 }
 
-// template<class state_t, class action_t>
-// NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
-// {
+template<class state_t, class action_t>
+NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
+{
 
-//     // Keep track of indices which have same h-value
-//     unsigned int i;
-//     std::vector<int> tie_list;
+    assert(!open_list_heap.empty());
 
-//     assert(!open_list_heap.empty());
+    unsigned int i;
+    min_idx = 0;
+    min_val = getNode(open_list_heap[0]).eval;
+    min_g = getNode(open_list_heap[0]).g_cost;
 
-//     for (i = 0; i < open_list_heap.size()-1; i++) {
+    if open_list_heap.size() > 1 {
+        for (i = 1; i < open_list_heap.size(); i++) {
+            cur_node = getNode(open_list_heap[i]);
+            if cur_node.eval < min_val {
+                min_val = cur_node.eval;
+                min_g = cur_node.g_cost;
+                min_idx = i;
+            } else if cur_node.eval == min_val{
+                if (cur_node.g_cost < min_g) {
+                    min_val = cur_node.eval;
+                    min_g = cur_node.g_cost;
+                    min_idx = i;
+                } 
+            }
+        }
+    }
 
-//         if (open_list_heap[i] == open_list_heap[i+1]) {
-//             tie_list.push_back(i);
-//         }
+    NodeID best_id = open_list_heap[min_idx];
+    node_table[best_id].in_open = false;
 
-//     }
+    open_list_heap[min_idx] = open_list_heap.back();
+    node_table.getNode(open_list_heap[min_idx]).location = 0;
+    open_list_heap.pop_back();
 
-//     NodeID best_id = open_list_heap[0];
-//     node_table[best_id].in_open = false;
+    heapifyDown(min_idx);
 
-//     open_list_heap[0] = open_list_heap.back();
-//     node_table.getNode(open_list_heap[0]).location = 0;
-//     open_list_heap.pop_back();
+    std::cout << getNode(best_id).eval << std::endl;
 
-//     heapifyDown(0);
-
-//     std::cout << getNode(best_id).eval << std::endl;
-
-//     return best_id;
-// }
+    return best_id;
+}
 
 template<class state_t, class action_t>
 inline BFSNode<state_t, action_t>& OpenClosedList<state_t, action_t>::getNode(NodeID id)

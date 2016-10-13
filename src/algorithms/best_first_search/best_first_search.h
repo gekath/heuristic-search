@@ -190,7 +190,7 @@ BfsExpansionResult BestFirstSearch<state_t, action_t>::nodeExpansion()
     if(open_closed_list.isOpenEmpty())
         return BfsExpansionResult::empty_open;
 
-    NodeID to_expand_id = open_closed_list.getBestNodeAndClose();
+    NodeID to_expand_id = open_closed_list.getLowGAndClose();
 
     BFSNode<state_t, action_t> to_expand_node = open_closed_list.getNode(to_expand_id);
     //std::cout << "Expanding " << to_expand_id << " - " << to_expand_node.state << "," << to_expand_node.gen_action << std::endl;
@@ -255,7 +255,7 @@ BfsExpansionResult BestFirstSearch<state_t, action_t>::nodeExpansion()
             double child_eval = nodeEval(child_state, child_g, child_h);
 
             //std::cout << "New Child " << child_state << " eval " << child_eval << std::endl;
-            open_closed_list.addHighGToOpen(child_state, app_actions[i], child_hash, child_g, child_h, child_eval,
+            open_closed_list.addNewNodeToOpen(child_state, app_actions[i], child_hash, child_g, child_h, child_eval,
                     to_expand_id);
         }
     }
