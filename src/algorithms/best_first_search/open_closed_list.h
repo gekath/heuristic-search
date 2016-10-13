@@ -342,7 +342,7 @@ NodeID OpenClosedList<state_t, action_t>::addLowGToOpen(const state_t& state, co
 
     for (rit = open_list_heap.rbegin(); rit != open_list_heap.rend(); ++rit) {
 
-        unsigned int i = std::distance(open_list_heap.begin() - rit.base()) - 1;
+        unsigned int i = std::distance(open_list_heap.begin(), rit.base()) - 1;
         std::cout << "eval" << i << "\t" << getNode(open_list_heap[i]).eval << "\t" << node_eval << std::endl;
         std::cout << "g" << i << "\t" << getNode(open_list_heap[i]).g_cost << "\t" << g << std::endl;
 
