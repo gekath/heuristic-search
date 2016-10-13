@@ -148,6 +148,10 @@ public:
     virtual NodeID addNewNodeToOpen(const state_t &state, const action_t &action, StateHash hash_value, double g,
             double h, double node_eval, NodeID parent);
 
+    virtual NodeID addLowGToOpen(const state_t &state, const action_t &action, StateHash hash_value, double g,
+            double h, double node_eval, NodeID parent);
+    virtual NodeID addHighGToOpen(const state_t &state, const action_t &action, StateHash hash_value, double g,
+            double h, double node_eval, NodeID parent);
     /**
      * Adds the initial node with the given attributes to the open list.
      *
@@ -313,8 +317,90 @@ NodeID OpenClosedList<state_t, action_t>::addNewNodeToOpen(const state_t& state,
 
     //std::cout << "New ID " << new_id << std::endl;
     //std::cout << "Node Table Size " << node_table.size() << std::endl;
+
     open_list_heap.push_back(new_id);
 
+    heapifyUp(open_list_heap.size() - 1);
+
+    //printOpen();
+    //std::cout << std::endl;
+
+    return new_id;
+}
+
+template<class state_t, class action_t>
+NodeID OpenClosedList<state_t, action_t>::addLowGToOpen(const state_t& state, const action_t &action,
+        StateHash hash_value, double g, double h, double node_eval, NodeID parent)
+{
+    NodeID new_id = node_table.addNewSearchNode(
+            BFSNode<state_t, action_t>(state, parent, action, g, h, node_eval, open_list_heap.size()), hash_value);
+
+    //std::cout << "New ID " << new_id << std::endl;
+    //std::cout << "Node Table Size " << node_table.size() << std::endl;
+
+    std::vector<unsigned int>::reverse_iterator it;
+
+    for (it = open_list_heap.rbegin(); it != open_list_heap.rend(); ++it) {
+
+        unsigned int i = it.base() - open_list_heap.begin() - 1;
+        std::cout << "eval" << i << "\t" << getNode(open_list_heap[i]).eval << "\t" << node_eval << std::endl;
+        std::cout << "g" << i << "\t" << getNode(open_list_heap[i]).g_cost << "\t" << g << std::endl;
+
+        if (!fp_equal(getNode(open_list_heap[i]).eval, node_eval)) {
+            break;
+        } else if (fp_less(g, getNode(open_list_heap[i]).g_cost)){
+            // std::cout << "here" << std::endl;
+            break;
+        }
+    }
+
+    // for (it = open_list_heap.rbegin(); it != open_list_heap.rend(); ++it) {
+
+    //     unsigned int i;
+    //     i = it.base() - open_list_heap.begin() - 1;
+    //     std::cout << "eval" << i << "\t" << getNode(open_list_heap[i]).eval << "\t" << node_eval << std::endl;
+    //     std::cout << "g" << i << "\t" << getNode(open_list_heap[i]).g_cost << "\t" << g << std::endl;
+
+    // }
+    // it = open_list_heap.rbegin();
+
+
+    open_list_heap.insert(it.base(), new_id);
+
+    heapifyUp(open_list_heap.size() - 1);
+
+    //printOpen();
+    //std::cout << std::endl;
+
+    return new_id;
+}
+
+template<class state_t, class action_t>
+NodeID OpenClosedList<state_t, action_t>::addHighGToOpen(const state_t& state, const action_t &action,
+        StateHash hash_value, double g, double h, double node_eval, NodeID parent)
+{
+    NodeID new_id = node_table.addNewSearchNode(
+            BFSNode<state_t, action_t>(state, parent, action, g, h, node_eval, open_list_heap.size()), hash_value);
+
+    //std::cout << "New ID " << new_id << std::endl;
+    //std::cout << "Node Table Size " << node_table.size() << std::endl;
+
+    std::vector<unsigned int>::reverse_iterator it;
+    it = open_list_heap.rbegin();
+
+    for (it = open_list_heap.rbegin(); it != open_list_heap.rend(); ++it) {
+
+        unsigned int i;
+        i = it.base() - open_list_heap.begin() - 1;
+        std::cout << i << std::endl;
+
+        if (fp_equal(getNode(open_list_heap[i]).eval, node_eval) && fp_greater(g, getNode(open_list_heap[i]).g_cost)){
+            break;
+        }
+    }
+
+    open_list_heap.insert(it.base(), new_id);
+    
     heapifyUp(open_list_heap.size() - 1);
 
     //printOpen();
@@ -363,7 +449,8 @@ template<class state_t, class action_t>
 inline bool OpenClosedList<state_t, action_t>::nodeNoWorse(const BFSNode<state_t, action_t>& node_1,
         const BFSNode<state_t, action_t>& node_2) const
 {
-    return !fp_greater(node_1.eval, node_2.eval);
+    return !fp_greater
+    (node_1.eval, node_2.eval);
 }
 
 template<class state_t, class action_t>
@@ -407,6 +494,38 @@ NodeID OpenClosedList<state_t, action_t>::getBestNodeAndClose()
 
     return best_id;
 }
+
+// template<class state_t, class action_t>
+// NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
+// {
+
+//     // Keep track of indices which have same h-value
+//     unsigned int i;
+//     std::vector<int> tie_list;
+
+//     assert(!open_list_heap.empty());
+
+//     for (i = 0; i < open_list_heap.size()-1; i++) {
+
+//         if (open_list_heap[i] == open_list_heap[i+1]) {
+//             tie_list.push_back(i);
+//         }
+
+//     }
+
+//     NodeID best_id = open_list_heap[0];
+//     node_table[best_id].in_open = false;
+
+//     open_list_heap[0] = open_list_heap.back();
+//     node_table.getNode(open_list_heap[0]).location = 0;
+//     open_list_heap.pop_back();
+
+//     heapifyDown(0);
+
+//     std::cout << getNode(best_id).eval << std::endl;
+
+//     return best_id;
+// }
 
 template<class state_t, class action_t>
 inline BFSNode<state_t, action_t>& OpenClosedList<state_t, action_t>::getNode(NodeID id)

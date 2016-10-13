@@ -34,6 +34,7 @@ int main(int argc, char **argv)
 
     MapManhattanDistance manhattan;
 
+
     vector<MapLocation> starts;
     vector<MapLocation> goals;
     vector<MapDir> solution;
