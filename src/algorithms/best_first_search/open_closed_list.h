@@ -172,7 +172,7 @@ public:
      */
     virtual NodeID getBestNodeAndClose();
 
-    virtual NodeID getLowGNodeAndClose();
+    virtual NodeID getLowGAndClose();
 
     /**
      * Adjusts the open list as needed because the node evaluation of the node with the given id has changed.
