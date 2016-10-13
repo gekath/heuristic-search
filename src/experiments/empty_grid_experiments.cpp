@@ -43,10 +43,28 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    cout << 'Loaded empty grid' << endl;
+
     map_ops.set4Connected();
     map_hash.setMapDimensions(map_ops);
 
     a_star.setHeuristic(&manhattan);
+
+    starts.clear();
+    goals.clear();
+    read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/empty_grid.probs", starts, goals);
+    assert(starts.size() == goals.size());
+
+    for(unsigned i = 0; i < starts.size(); i++) {
+        goal_test.setGoal(goals[i]);
+        manhattan.setGoal(goals[i]);
+
+        a_star.getPlan(starts[i], solution);
+
+        // prints stats (using goal test count as measure of number of expansions)
+        cout << a_star.getLastPlanCost() << "\t" << a_star.getGoalTestCount() << "\t" << a_star.getUniqueGoalTests()
+                << endl;
+    }
 
     return 0;
 }
