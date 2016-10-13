@@ -22,7 +22,7 @@ using namespace std;
 int main(int argc, char **argv)
 {
 
-    tieBreaker = "default";
+    char * tieBreaker = "default";
     if (argc > 2) {
         tieBreaker = argv[2];
     }
