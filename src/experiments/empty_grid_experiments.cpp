@@ -21,6 +21,14 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
+
+    tieBreaker = "default";
+    if (len(*argv) > 2)) {
+        tieBreaker = argv[2];
+    }
+
+    cout << tieBreaker << endl;
+
     AStar<MapLocation, MapDir> a_star;
 
     MapPathfindingTransitions map_ops;
@@ -33,7 +41,6 @@ int main(int argc, char **argv)
     a_star.setHashFunction(&map_hash);
 
     MapManhattanDistance manhattan;
-
 
     vector<MapLocation> starts;
     vector<MapLocation> goals;
