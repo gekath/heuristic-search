@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 {
 
     tieBreaker = "default";
-    if (len(*argv) > 2)) {
+    if (argc > 2) {
         tieBreaker = argv[2];
     }
 
