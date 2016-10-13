@@ -340,6 +340,7 @@ NodeID OpenClosedList<state_t, action_t>::addLowGToOpen(const state_t& state, co
 
     std::vector<unsigned int>::reverse_iterator it;
 
+
     for (it = open_list_heap.rbegin(); it != open_list_heap.rend(); ++it) {
 
         unsigned int i = it.base() - open_list_heap.begin() - 1;
