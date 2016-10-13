@@ -386,8 +386,8 @@ NodeID OpenClosedList<state_t, action_t>::addHighGToOpen(const state_t& state, c
     for (it = open_list_heap.rbegin(); it != open_list_heap.rend(); ++it) {
 
         unsigned int i = it.base() - open_list_heap.begin() - 1;
-        // std::cout << "eval" << i << "\t" << getNode(open_list_heap[i]).eval << "\t" << node_eval << std::endl;
-        // std::cout << "g" << i << "\t" << getNode(open_list_heap[i]).g_cost << "\t" << g << std::endl;
+        std::cout << "eval" << i << "\t" << getNode(open_list_heap[i]).eval << "\t" << node_eval << std::endl;
+        std::cout << "g" << i << "\t" << getNode(open_list_heap[i]).g_cost << "\t" << g << std::endl;
 
 
         // Iterate from the end of the list. Appending new costs, should be at least the cost of 
