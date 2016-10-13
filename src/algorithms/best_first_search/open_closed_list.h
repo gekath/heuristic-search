@@ -512,14 +512,14 @@ NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
     double min_val = getNode(open_list_heap[0]).eval;
     double min_g = getNode(open_list_heap[0]).g_cost;
 
-    if open_list_heap.size() > 1 {
+    if (open_list_heap.size() > 1) {
         for (i = 1; i < open_list_heap.size(); i++) {
             cur_node = getNode(open_list_heap[i]);
-            if cur_node.eval < min_val {
+            if (cur_node.eval < min_val) {
                 min_val = cur_node.eval;
                 min_g = cur_node.g_cost;
                 min_idx = i;
-            } else if cur_node.eval == min_val{
+            } else if (cur_node.eval == min_val) {
                 if (cur_node.g_cost < min_g) {
                     min_val = cur_node.eval;
                     min_g = cur_node.g_cost;
