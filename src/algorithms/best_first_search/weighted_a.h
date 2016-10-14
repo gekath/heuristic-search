@@ -49,5 +49,5 @@ void WeightedAStar<state_t, action_t>::setWeights(double new_weight)
     weight = new_weight;
 }
 
-#endif /* A_STAR_H_ */
+#endif /* WEIGHTED_A_H_ */
 

@@ -17,8 +17,8 @@
 #include "../generic_defs/single_goal_test.h"
 #include "../algorithms/best_first_search/a_star.h"
 #include "../algorithms/best_first_search/weighted_a.h"
+#include "../algorithms/best_first_search/gbfs.h"
 #include "../utils/string_utils.h"
-
 
 using namespace std;
 
@@ -38,18 +38,22 @@ int main(int argc, char **argv)
 
     AStar<MapLocation, MapDir> a_star;
     WeightedAStar<MapLocation, MapDir> weighted_a;
+    GBFS<MapLocation, MapDir> gbfs;
 
     MapPathfindingTransitions map_ops;
     a_star.setTransitionSystem(&map_ops);
     weighted_a.setTransitionSystem(&map_ops);
+    gbfs.setTransitionSystem(&map_ops);
 
     SingleGoalTest<MapLocation> goal_test(MapLocation(0, 0));
     a_star.setGoalTest(&goal_test);
     weighted_a.setGoalTest(&goal_test);
+    gbfs.setGoalTest(&goal_test);
 
     MapLocHashFunction map_hash;
     a_star.setHashFunction(&map_hash);
     weighted_a.setHashFunction(&map_hash);
+    gbfs.setHashFunction(&map_hash);
 
     MapManhattanDistance manhattan;
 
@@ -75,6 +79,9 @@ int main(int argc, char **argv)
     weighted_a.setHeuristic(&manhattan);
     weighted_a.setTieBreaker(tieBreaker);
     weighted_a.setWeights(weights);
+
+    gbfs.setHeuristic(&manhattan);
+    gbfs.setTieBreaker(tieBreaker);
 
     cout << "A* Star Search" << endl;  
 
@@ -113,6 +120,28 @@ int main(int argc, char **argv)
                 // << endl;
 
         cout << weighted_a.getLastPlanCost() << "\t" << weighted_a.getGoalTestCount() << "\t" << weighted_a.getUniqueGoalTests()
+                << endl;
+
+    }
+
+    cout << "GBFS Search" << endl;
+
+    starts.clear();
+    goals.clear();
+    read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/empty_grid.probs", starts, goals);
+    assert(starts.size() == goals.size());
+
+    for(unsigned i = 0; i < starts.size(); i++) {
+        goal_test.setGoal(goals[i]);
+        manhattan.setGoal(goals[i]);
+
+        gbfs.getPlan(starts[i], solution);
+
+        // prints stats (using goal test count as measure of number of expansions)
+        // cout << a_star.getLastPlanCost() << "\t" << a_star.getGoalTestCount() << "\t" << a_star.getUniqueGoalTests()
+                // << endl;
+
+        cout << gbfs.getLastPlanCost() << "\t" << gbfs.getGoalTestCount() << "\t" << gbfs.getUniqueGoalTests()
                 << endl;
 
     }
