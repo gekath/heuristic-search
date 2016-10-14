@@ -201,7 +201,7 @@ BfsExpansionResult BestFirstSearch<state_t, action_t>::nodeExpansion()
 
     NodeID to_expand_id;
     if (tiebreaker == 0) {
-        to_expand_id = open_closed_list.getNewNodeAndClose();
+        to_expand_id = open_closed_list.getBestNodeAndClose();
     } else if (tiebreaker == 1) {
         to_expand_id = open_closed_list.getLowGAndClose();
     } else if (tiebreaker == 2) {
