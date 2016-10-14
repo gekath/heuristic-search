@@ -93,6 +93,7 @@ int main(int argc, char **argv)
 
         cout << weighted_a.getLastPlanCost() << "\t" << weighted_a.getGoalTestCount() << "\t" << weighted_a.getUniqueGoalTests()
                 << endl;
+        cout << weighted_a.weight << endl;
 
     }
 

@@ -20,12 +20,11 @@ public:
     WeightedAStar();
     virtual ~WeightedAStar();
     void setWeights(double weights);
+    double weight;
 
 protected:
     virtual double nodeEval(const state_t &state, double g_cost, double h_cost);
 
-private:
-    int weight;
 };
 
 template<class state_t, class action_t>
