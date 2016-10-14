@@ -22,7 +22,7 @@ public:
 
 protected:
     virtual double nodeEval(const state_t &state, double g_cost, double h_cost);
-    virtual double setWeights(double weights);
+    void setWeights(double weights);
 
 private:
     int weight;
@@ -45,7 +45,7 @@ inline double WeightedAStar<state_t, action_t>::nodeEval(const state_t& state, d
 }
 
 template<class state_t, class action_t>
-inline double WeightedAStar<state_t, action_t>::setWeights(double weight)
+void WeightedAStar<state_t, action_t>::setWeights(double new_weight)
 {
     weight = new_weight;
 }
