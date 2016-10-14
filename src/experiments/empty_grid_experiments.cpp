@@ -27,14 +27,16 @@ int main(int argc, char **argv)
 
     // default 0, low g 1, high g 2
     int tieBreaker = 0;
+    double weight = 1;
+
     if (argc > 1) {
         tieBreaker = atoi(argv[1]);
+    } if (argc > 2) {
+        weight = atoi(argv[2]);
     }
 
     // cout << argc << endl;
     // cout << tieBreaker << endl;
-
-    double weights = 2;
 
     AStar<MapLocation, MapDir> a_star;
     WeightedAStar<MapLocation, MapDir> weighted_a;
@@ -78,7 +80,7 @@ int main(int argc, char **argv)
 
     weighted_a.setHeuristic(&manhattan);
     weighted_a.setTieBreaker(tieBreaker);
-    weighted_a.setWeights(weights);
+    weighted_a.setWeights(weight);
 
     gbfs.setHeuristic(&manhattan);
     gbfs.setTieBreaker(tieBreaker);
