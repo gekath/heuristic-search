@@ -34,7 +34,7 @@ int main(int argc, char **argv)
     // cout << argc << endl;
     // cout << tieBreaker << endl;
 
-    int weights = 2;
+    double weights = 2;
 
     AStar<MapLocation, MapDir> a_star;
     WeightedAStar<MapLocation, MapDir> weighted_a;
