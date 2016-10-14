@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 
     a_star.setHeuristic(&manhattan);
     // a_star.setTieBreaker(&default);
-    a_star.setTieBreaker(tiebreaker);
+    a_star.setTieBreaker(tieBreaker);
 
     starts.clear();
     goals.clear();
