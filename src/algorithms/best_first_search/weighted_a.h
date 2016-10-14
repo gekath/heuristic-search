@@ -19,10 +19,10 @@ class WeightedAStar: public AStar<state_t, action_t>
 public:
     WeightedAStar();
     virtual ~WeightedAStar();
+    void setWeights(double weights);
 
 protected:
     virtual double nodeEval(const state_t &state, double g_cost, double h_cost);
-    void setWeights(double weights);
 
 private:
     int weight;
