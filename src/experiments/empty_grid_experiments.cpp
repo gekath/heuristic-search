@@ -29,8 +29,8 @@ int main(int argc, char **argv)
         tieBreaker = atoi(argv[1]);
     }
 
-    cout << argc << endl;
-    cout << tieBreaker << endl;
+    // cout << argc << endl;
+    // cout << tieBreaker << endl;
 
     AStar<MapLocation, MapDir> a_star;
 
@@ -62,6 +62,7 @@ int main(int argc, char **argv)
 
     a_star.setHeuristic(&manhattan);
     // a_star.setTieBreaker(&default);
+    a_star.setTieBreaker(tiebreaker);
 
     starts.clear();
     goals.clear();

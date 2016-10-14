@@ -81,6 +81,8 @@ public:
      */
     void setHeuristic(Heuristic<state_t> *heur);
 
+    void setTieBreaker(int tiebreaker);
+
     // void setTieBreaker(NodeID<state_t, action_t, StateHash, double, double, double, NodeID> *tiebreaker);
 
     /**
@@ -123,6 +125,7 @@ protected:
 
     Heuristic<state_t> *heur_func; ///< The heuristic function.
     const StateHashFunction<state_t> *hash_func; ///< The hash function.
+    int tiebreaker;
 
     OpenClosedList<state_t, action_t> open_closed_list; ///< The open and closed list.
 
@@ -152,6 +155,12 @@ template<class state_t, class action_t>
 inline void BestFirstSearch<state_t, action_t>::setHeuristic(Heuristic<state_t>* heur)
 {
     heur_func = heur;
+}
+
+template<class state_t, class action_t>
+inline void BestFirstSearch<state_t, action_t>::setTieBreaker(int tiebreaker_type)
+{
+    tiebreaker = tiebreaker_type;
 }
 
 template<class state_t, class action_t>
@@ -190,7 +199,16 @@ BfsExpansionResult BestFirstSearch<state_t, action_t>::nodeExpansion()
     if(open_closed_list.isOpenEmpty())
         return BfsExpansionResult::empty_open;
 
-    NodeID to_expand_id = open_closed_list.getHighGAndClose();
+    NodeID to_expand_id;
+    if (tiebreaker == 0) {
+        to_expand_id = open_closed_list.getNewNodeAndClose();
+    } else if (tiebreaker == 1) {
+        to_expand_id = open_closed_list.getLowGAndClose();
+    } else if (tiebreaker == 2) {
+        to_expand_id = open_closed_list.getHighGAndClose();
+    }
+
+    // NodeID to_expand_id = open_closed_list.getHighGAndClose();
 
     BFSNode<state_t, action_t> to_expand_node = open_closed_list.getNode(to_expand_id);
     //std::cout << "Expanding " << to_expand_id << " - " << to_expand_node.state << "," << to_expand_node.gen_action << std::endl;
