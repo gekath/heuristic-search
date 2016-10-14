@@ -86,6 +86,7 @@ int main(int argc, char **argv)
         manhattan.setGoal(goals[i]);
 
         a_star.getPlan(starts[i], solution);
+        weighted_a.getPlan(starts[i], solution);
 
         // prints stats (using goal test count as measure of number of expansions)
         // cout << a_star.getLastPlanCost() << "\t" << a_star.getGoalTestCount() << "\t" << a_star.getUniqueGoalTests()
