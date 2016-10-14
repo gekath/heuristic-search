@@ -32,16 +32,22 @@ int main(int argc, char **argv)
     // cout << argc << endl;
     // cout << tieBreaker << endl;
 
+    int weights = 2;
+
     AStar<MapLocation, MapDir> a_star;
+    WeightedAStar<MapLocation, MapDir> weighted_a;
 
     MapPathfindingTransitions map_ops;
     a_star.setTransitionSystem(&map_ops);
+    weighted_a.setTransitionSystem(&map_ops);
 
     SingleGoalTest<MapLocation> goal_test(MapLocation(0, 0));
     a_star.setGoalTest(&goal_test);
+    weighted_a.setGoalTest(&goal_test);
 
     MapLocHashFunction map_hash;
     a_star.setHashFunction(&map_hash);
+    weighted_a.setHashFunction(&map_hash);
 
     MapManhattanDistance manhattan;
 
@@ -64,6 +70,10 @@ int main(int argc, char **argv)
     // a_star.setTieBreaker(&default);
     a_star.setTieBreaker(tieBreaker);
 
+    weighted_a.setHeuristic(&manhattan);
+    weighted_a.setTieBreaker(tieBreaker);
+    weighted_a.setWeights(weights);
+
     starts.clear();
     goals.clear();
     read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/empty_grid.probs", starts, goals);
@@ -76,8 +86,12 @@ int main(int argc, char **argv)
         a_star.getPlan(starts[i], solution);
 
         // prints stats (using goal test count as measure of number of expansions)
-        cout << a_star.getLastPlanCost() << "\t" << a_star.getGoalTestCount() << "\t" << a_star.getUniqueGoalTests()
+        // cout << a_star.getLastPlanCost() << "\t" << a_star.getGoalTestCount() << "\t" << a_star.getUniqueGoalTests()
+                // << endl;
+
+        cout << weighted_a.getLastPlanCost() << "\t" << weighted_a.getGoalTestCount() << "\t" << weighted_a.getUniqueGoalTests()
                 << endl;
+
     }
 
     return 0;
