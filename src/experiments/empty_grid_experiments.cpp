@@ -16,7 +16,9 @@
 #include "../generic_defs/non_goal_heuristic.h"
 #include "../generic_defs/single_goal_test.h"
 #include "../algorithms/best_first_search/a_star.h"
+#include "../algorithms/best_first_search/weighted_a.h"
 #include "../utils/string_utils.h"
+
 
 using namespace std;
 
