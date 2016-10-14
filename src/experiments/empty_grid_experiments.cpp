@@ -76,6 +76,8 @@ int main(int argc, char **argv)
     weighted_a.setTieBreaker(tieBreaker);
     weighted_a.setWeights(weights);
 
+    cout << "A* Star Search" << endl;  
+
     starts.clear();
     goals.clear();
     read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/empty_grid.probs", starts, goals);
@@ -86,6 +88,24 @@ int main(int argc, char **argv)
         manhattan.setGoal(goals[i]);
 
         a_star.getPlan(starts[i], solution);
+
+        // prints stats (using goal test count as measure of number of expansions)
+        cout << a_star.getLastPlanCost() << "\t" << a_star.getGoalTestCount() << "\t" << a_star.getUniqueGoalTests()
+                << endl;
+
+    }
+
+    cout << "Weighted A* Star Search" << endl;
+
+    starts.clear();
+    goals.clear();
+    read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/empty_grid.probs", starts, goals);
+    assert(starts.size() == goals.size());
+
+    for(unsigned i = 0; i < starts.size(); i++) {
+        goal_test.setGoal(goals[i]);
+        manhattan.setGoal(goals[i]);
+
         weighted_a.getPlan(starts[i], solution);
 
         // prints stats (using goal test count as measure of number of expansions)
@@ -94,7 +114,6 @@ int main(int argc, char **argv)
 
         cout << weighted_a.getLastPlanCost() << "\t" << weighted_a.getGoalTestCount() << "\t" << weighted_a.getUniqueGoalTests()
                 << endl;
-        cout << weighted_a.weight << endl;
 
     }
 
