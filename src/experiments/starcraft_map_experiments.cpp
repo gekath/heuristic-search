@@ -203,7 +203,7 @@ int main(int argc, char **argv)
 
     cout << "Number of problems: " << default_nodes.size() << endl;
     cout << "High g count: " << high_g_count << endl;
-    cout << default_count / 100.0 << "\t" << low_g_count / 100.0 << "\t" <<  high_g_count / 100.0 << endl;
+    cout << default_count << "\t" << low_g_count << "\t" <<  high_g_count << endl;
 
 
 
