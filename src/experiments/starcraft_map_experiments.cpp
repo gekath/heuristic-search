@@ -182,9 +182,9 @@ int main(int argc, char **argv)
     cout << default_avg << "\t" << low_g_avg << "\t" << high_g_avg << endl;
 
     unsigned int i;
-    double default_count;
-    double low_g_count;
-    double high_g_count;
+    double default_count = 0;
+    double low_g_count = 0;
+    double high_g_count = 0;
     for (i = 0; i < default_nodes.size(); i++) {
 
         int min_val = min({default_nodes[i], low_g_nodes[i], high_g_nodes[i]});
