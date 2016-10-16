@@ -15,6 +15,8 @@
 #include "../generic_defs/non_goal_heuristic.h"
 #include "../generic_defs/single_goal_test.h"
 #include "../algorithms/best_first_search/a_star.h"
+#include "../algorithms/best_first_search/weighted_a.h"
+#include "../algorithms/best_first_search/gbfs.h"
 #include "../utils/string_utils.h"
 
 using namespace std;
@@ -69,7 +71,7 @@ int main(int argc, char **argv)
 
         a_star.getPlan(starts[i], solution);
 
-        goal_test_count = a_star.getGoalTestCount();
+        int goal_test_count = a_star.getGoalTestCount();
 
         nodes_expanded[i] = goal_test_count;
 
