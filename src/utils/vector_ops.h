@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <vector>
 #include <algorithms>
+#include "vector_ops.h"
 
 double compute_median(vector<int> scores);
 
