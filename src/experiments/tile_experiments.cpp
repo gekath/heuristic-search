@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include "../domains/tile_puzzle/tile_puzzle_transitions.h"
 #include "../domains/tile_puzzle/tile_manhattan_distance.h"
@@ -19,6 +20,39 @@
 #include <cstdint>
 
 using namespace std;
+
+double compute_median(vector<int> scores);
+double compute_average(vector<int> scores);
+
+double compute_median(vector<int> scores) {
+
+    double median;
+    size_t size = scores.size();
+    sort(scores.begin(), scores.end());
+
+    if (size % 2 == 0) {
+        median = (scores[size / 2 - 1] + scores[size / 2]) / 2;
+    } else {
+        median = scores[size / 2];
+    }
+
+    return median;
+
+}
+
+double compute_average(vector<int> scores) {
+
+    int sum = 0 ;
+    unsigned int i;
+    size_t size = scores.size();
+
+    for (i = 0; i < size; i ++) {
+        sum = sum + scores[i];
+    }
+
+    return sum / size;
+
+}
 
 int main(int argc, char **argv)
 {
@@ -91,6 +125,19 @@ int main(int argc, char **argv)
 
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
 
+    vector<int> a1_nodes(starts.size());
+    vector<int> a1_cost(starts.size());
+    vector<int> a2_nodes(starts.size());
+    vector<int> a2_cost(starts.size());
+    vector<int> a5_nodes(starts.size());
+    vector<int> a5_cost(starts.size());
+    vector<int> a10_nodes(starts.size());
+    vector<int> a10_cost(starts.size());
+    vector<int> a100_nodes(starts.size());
+    vector<int> a100_cost(starts.size());
+    vector<int> gbfs_nodes(starts.size());
+    vector<int> gbfs_cost(starts.size());
+
     for(unsigned i = 0; i < starts.size(); i++) {
         TilePuzzleState start_state(starts[i], 3, 4);
 
@@ -101,33 +148,75 @@ int main(int argc, char **argv)
         a_100.getPlan(start_state, solution);
         gbfs.getPlan(start_state, solution);
 
+        a1_nodes[i] = a_1.getGoalTestCount();
+        a2_nodes[i] = a_2.getGoalTestCount();
+        a5_nodes[i] = a_5.getGoalTestCount();
+        a10_nodes[i] = a_10.getGoalTestCount();
+        a100_nodes[i] = a_100.getGoalTestCount();
+        gbfs_nodes[i] = gbfs.getGoalTestCount();
+
+        a1_cost[i] = a_1.getLastPlanCost();
+        a2_cost[i] = a_2.getLastPlanCost();
+        a5_cost[i] = a_5.getLastPlanCost();
+        a10_cost[i] = a_10.getLastPlanCost();
+        a100_cost[i] = a_100.getLastPlanCost();
+        gbfs_cost[i] = gbfs.getLastPlanCost();
+
         // prints stats (using goal test count as measure of number of expansions)
         
-        cout << "Weighted A Star, weight = 1" << endl;
-        cout << a_1.getLastPlanCost() << "\t" << a_1.getGoalTestCount() << "\t" << a_1.getUniqueGoalTests()
-                << endl;
+        // cout << "Weighted A Star, weight = 1" << endl;
+        // cout << a_1.getLastPlanCost() << "\t" << a_1.getGoalTestCount() << "\t" << a_1.getUniqueGoalTests()
+        //         << endl;
 
-        cout << "Weighted A Star, weight = 2" << endl;
-        cout << a_2.getLastPlanCost() << "\t" << a_2.getGoalTestCount() << "\t" << a_2.getUniqueGoalTests()
-                << endl;
+        // cout << "Weighted A Star, weight = 2" << endl;
+        // cout << a_2.getLastPlanCost() << "\t" << a_2.getGoalTestCount() << "\t" << a_2.getUniqueGoalTests()
+        //         << endl;
 
-        cout << "Weighted A Star, weight = 5" << endl;
-        cout << a_5.getLastPlanCost() << "\t" << a_5.getGoalTestCount() << "\t" << a_5.getUniqueGoalTests()
-                << endl;
+        // cout << "Weighted A Star, weight = 5" << endl;
+        // cout << a_5.getLastPlanCost() << "\t" << a_5.getGoalTestCount() << "\t" << a_5.getUniqueGoalTests()
+        //         << endl;
 
-        cout << "Weighted A Star, weight = 10" << endl;
-        cout << a_10.getLastPlanCost() << "\t" << a_10.getGoalTestCount() << "\t" << a_10.getUniqueGoalTests()
-                << endl;
+        // cout << "Weighted A Star, weight = 10" << endl;
+        // cout << a_10.getLastPlanCost() << "\t" << a_10.getGoalTestCount() << "\t" << a_10.getUniqueGoalTests()
+        //         << endl;
 
-        cout << "Weighted A Star, weight = 100" << endl;
-        cout << a_100.getLastPlanCost() << "\t" << a_100.getGoalTestCount() << "\t" << a_100.getUniqueGoalTests()
-                << endl;
+        // cout << "Weighted A Star, weight = 100" << endl;
+        // cout << a_100.getLastPlanCost() << "\t" << a_100.getGoalTestCount() << "\t" << a_100.getUniqueGoalTests()
+        //         << endl;
 
-        cout << "GBFS" << endl;
-        cout << gbfs.getLastPlanCost() << "\t" << gbfs.getGoalTestCount() << "\t" << gbfs.getUniqueGoalTests()
-                << endl;
+        // cout << "GBFS" << endl;
+        // cout << gbfs.getLastPlanCost() << "\t" << gbfs.getGoalTestCount() << "\t" << gbfs.getUniqueGoalTests()
+        //         << endl;
 
     }
+
+    double a1_median_nodes = compute_median(a1_nodes);
+    double a2_median_nodes = compute_median(a2_nodes);
+    double a5_median_nodes = compute_median(a5_nodes);
+    double a10_median_nodes = compute_median(a19_nodes); 
+    double a100_median_nodes = compute_median(a100_nodes);
+    double gbfs_median_nodes = compute_median(gbfs_nodes);
+
+    double a1_average_nodes = compute_average(a1_nodes);
+    double a2_average_nodes = compute_average(a2_nodes);
+    double a5_average_nodes = compute_average(a5_nodes);
+    double a10_average_nodes = compute_average(a10_nodes);
+    double a100_average_nodes = compute_average(a100_nodes);
+    double gbfs_average_nodes = compute_average(gbfs_nodes);
+
+    double a1_median_cost = compute_median(a1_cost);
+    double a2_median_cost = compute_median(a2_cost);
+    double a5_median_cost = compute_median(a5_cost);
+    double a10_median_cost = compute_median(a10_cost);
+    double a100_median_cost = compute_median(a100_cost);
+    double gbfs_median_cost = compute_median(gbfs_cost);
+
+    double a1_average_cost = compute_average(a1_cost);
+    double a2_average_cost = compute_average(a2_cost);
+    double a5_average_cost = compute_average(a5_cost);
+    double a10_average_cost = compute_average(a10_cost);
+    double a100_average_cost = compute_average(a100_cost);
+    double gbfs_average_cost = compute_average(gbfs_cost);
 
     return 0;
 }
