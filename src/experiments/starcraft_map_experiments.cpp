@@ -182,9 +182,9 @@ int main(int argc, char **argv)
     cout << default_avg << "\t" << low_g_avg << "\t" << high_g_avg << endl;
 
     unsigned int i;
-    int default_count;
-    int low_g_count;
-    int high_g_count;
+    double default_count;
+    double low_g_count;
+    double high_g_count;
     for (i = 0; i < default_nodes.size(); i++) {
 
         int min_val = min({default_nodes[i], low_g_nodes[i], high_g_nodes[i]});
@@ -197,9 +197,13 @@ int main(int argc, char **argv)
             high_g_count = high_g_count + 1;
         }         
 
+       cout << default_nodes[i] << "\t" << low_g_nodes[i] << "\t" << high_g_nodes[i] << endl; 
+
     }
 
-    cout << default_count / 100 << "\t" << low_g_count / 100 << "\t" <<  high_g_count / 100 << endl;
+    cout << "Number of problems: " << default_nodes.size() << endl;
+    cout << "High g count: " << high_g_count << endl;
+    cout << default_count / 100.0 << "\t" << low_g_count / 100.0 << "\t" <<  high_g_count / 100.0 << endl;
 
 
 
