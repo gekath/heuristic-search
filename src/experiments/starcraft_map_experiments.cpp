@@ -18,7 +18,7 @@
 #include "../algorithms/best_first_search/weighted_a.h"
 #include "../algorithms/best_first_search/gbfs.h"
 #include "../utils/string_utils.h"
-#include "../utils/median.cpp"
+#include "../utils/vector_ops.h"
 
 using namespace std;
 
@@ -134,10 +134,11 @@ int main(int argc, char **argv)
                 << endl;
     }
 
-    sort(default_nodes.begin(), default_nodes.end());
+    default_median = compute_median(default_nodes);
+    low_g_median = compute_median(low_g_nodes);
+    high_g_median = compute_median(high_g_nodes);
 
-    if default_nodes.size() 
-    
+
 
 
     return 0;

@@ -8,3 +8,5 @@
 #include <algorithms>
 
 double compute_median(vector<int> scores);
+
+double compute_average(vector<int> average);

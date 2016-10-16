@@ -17,3 +17,17 @@ double compute_median(vector<int> scores) {
     return median;
 
 }
+
+double compute_average(vector<int> scores) {
+
+    int sum = 0 ;
+    int i;
+    size_t size = scores.size();
+
+    for (i = 0; i < size; i ++) {
+        sum = sum + scores[i];
+    }
+
+    return sum / size;
+
+}
