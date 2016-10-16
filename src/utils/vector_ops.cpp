@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<vector>
-#include<algorithms>
+#include<algorithm>
 
 double compute_median(std::vector<int, std::allocator<int> > scores) {
 
