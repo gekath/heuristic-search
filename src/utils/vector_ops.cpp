@@ -2,7 +2,7 @@
 #include<vector>
 #include<algorithms>
 
-double compute_median(vector<int> scores) {
+double compute_median(std::vector<int> scores) {
 
     double median;
     size_t size = scores.size();
@@ -18,7 +18,7 @@ double compute_median(vector<int> scores) {
 
 }
 
-double compute_average(vector<int> scores) {
+double compute_average(std::vector<int> scores) {
 
     int sum = 0 ;
     int i;
