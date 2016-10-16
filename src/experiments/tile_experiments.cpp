@@ -30,12 +30,12 @@ int main(int argc, char **argv)
         tiebreaker = atoi(argv[1]);
     } 
 
-    WeightedAStar<TilePuzzlestate, BlankSlide> a_1;
-    WeightedAStar<TilePuzzlestate, BlankSlide> a_2;
-    WeightedAStar<TilePuzzlestate, BlankSlide> a_5;
-    WeightedAStar<TilePuzzlestate, BlankSlide> a_10;
-    WeightedAStar<TilePuzzlestate, BlankSlide> a_100;
-    GBFS<TilePuzzlestate, BlankSlide> gbfs;
+    WeightedAStar<TilePuzzleState, BlankSlide> a_1;
+    WeightedAStar<TilePuzzleState, BlankSlide> a_2;
+    WeightedAStar<TilePuzzleState, BlankSlide> a_5;
+    WeightedAStar<TilePuzzleState, BlankSlide> a_10;
+    WeightedAStar<TilePuzzleState, BlankSlide> a_100;
+    GBFS<TilePuzzleState, BlankSlide> gbfs;
 
     TilePuzzleTransitions tile_ops(3, 4);
     a_1.setTransitionSystem(&tile_ops);
