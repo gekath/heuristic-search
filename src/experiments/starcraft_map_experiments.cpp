@@ -18,9 +18,41 @@
 #include "../algorithms/best_first_search/weighted_a.h"
 #include "../algorithms/best_first_search/gbfs.h"
 #include "../utils/string_utils.h"
-#include "../utils/vector_ops.h"
 
 using namespace std;
+
+double compute_median(vector<int> scores);
+double compute_avg(vector<int> scores);
+
+double compute_median(vector<int> scores) {
+
+    double median;
+    size_t size = scores.size();
+    sort(scores.begin(), scores.end());
+
+    if (size % 2 == 0) {
+        median = (scores[size / 2 - 1] + scores[size / 2]) / 2;
+    } else {
+        median = scores[size / 2];
+    }
+
+    return median;
+
+}
+
+double compute_average(vector<int> scores) {
+
+    int sum = 0 ;
+    int i;
+    size_t size = scores.size();
+
+    for (i = 0; i < size; i ++) {
+        sum = sum + scores[i];
+    }
+
+    return sum / size;
+
+}
 
 int main(int argc, char **argv)
 {
