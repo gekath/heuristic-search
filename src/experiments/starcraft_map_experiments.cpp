@@ -22,15 +22,23 @@ using namespace std;
 int main(int argc, char **argv)
 {
     AStar<MapLocation, MapDir> a_star;
+    WeightedAStar<MapLocation, MapDir> weighted_a;
+    GBFS<MapLocation, MapDir> gbfs;
 
     MapPathfindingTransitions map_ops;
     a_star.setTransitionSystem(&map_ops);
+    weighted_a.setTransitionSystem(&map_ops);
+    gbfs.setTransitionSystem(&map_ops);
 
     SingleGoalTest<MapLocation> goal_test(MapLocation(0, 0));
     a_star.setGoalTest(&goal_test);
+    weighted_a.setGoalTest(&goal_test);
+    gbfs.setGoalTest(&goal_test);
 
     MapLocHashFunction map_hash;
     a_star.setHashFunction(&map_hash);
+    weighted_a.setHashFunction(&map_hash);
+    gbfs.setHashFunction(&map_hash);
 
     MapManhattanDistance manhattan;
 
@@ -44,11 +52,16 @@ int main(int argc, char **argv)
     map_hash.setMapDimensions(map_ops);
 
     a_star.setHeuristic(&manhattan);
+    weighted_a.setHeuristic(&manhattan);
+    gbfs.setHeuristic(&manhattan);
+
 
     starts.clear();
     goals.clear();
     read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/starcraft_bgh.probs", starts, goals);
     assert(starts.size() == goals.size());
+
+    vector<int> nodes_expanded(starts.size());
 
     for(unsigned i = 0; i < starts.size(); i++) {
         goal_test.setGoal(goals[i]);
@@ -56,10 +69,16 @@ int main(int argc, char **argv)
 
         a_star.getPlan(starts[i], solution);
 
+        goal_test_count = a_star.getGoalTestCount();
+
+        nodes_expanded[i] = goal_test_count;
+
         // prints stats (using goal test count as measure of number of expansions)
-        cout << a_star.getLastPlanCost() << "\t" << a_star.getGoalTestCount() << "\t" << a_star.getUniqueGoalTests()
+        cout << a_star.getLastPlanCost() << "\t" << goal_test_count << "\t" << a_star.getUniqueGoalTests()
                 << endl;
     }
+
+    cout << nodes_expanded.size() << endl;
 
     return 0;
 }
