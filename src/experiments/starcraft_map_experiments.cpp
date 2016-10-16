@@ -182,19 +182,19 @@ int main(int argc, char **argv)
     cout << default_avg << "\t" << low_g_avg << "\t" << high_g_avg << endl;
 
     unsigned int i;
-    unsigned int default_count;
-    unsigned int low_g_count;
-    unsigned int high_g_count;
+    int default_count;
+    int low_g_count;
+    int high_g_count;
     for (i = 0; i < default_nodes.size(); i++) {
 
         int min_val = min({default_nodes[i], low_g_nodes[i], high_g_nodes[i]});
 
         if (default_nodes[i] == min_val) {
-            default_count = default_count + 1;
+            default_count++;
         } else if (low_g_nodes[i] == min_val) {
-            low_g_count = low_g_count + 1;
+            low_g_count++;
         } else if (high_g_nodes[i] == min_val) {
-            high_g_count = high_g_count + 1;
+            high_g_count++;
         }         
 
        cout << default_nodes[i] << "\t" << low_g_nodes[i] << "\t" << high_g_nodes[i] << endl; 
