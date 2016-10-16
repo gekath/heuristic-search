@@ -11,7 +11,8 @@
 #include "../domains/tile_puzzle/tile_puzzle_transitions.h"
 #include "../domains/tile_puzzle/tile_manhattan_distance.h"
 #include "../generic_defs/single_goal_test.h"
-#include "../algorithms/best_first_search/a_star.h"
+#include "../algorithms/best_first_search/weighted_a.h"
+#include "../algorithms/best_first_search/gbfs.h"
 #include "../generic_defs/permutation_hash_function.h"
 #include "../utils/combinatorics.h"
 
@@ -23,10 +24,10 @@ int main(int argc, char **argv)
 {
 
      // default 0, low g 1, high g 2
-    int tieBreaker = 0;
+    int tiebreaker = 0;
 
     if (argc > 1) {
-        tieBreaker = atoi(argv[1]);
+        tiebreaker = atoi(argv[1]);
     } 
 
     WeightedAStar<TilePuzzlestate, BlankSlide> a_1;
