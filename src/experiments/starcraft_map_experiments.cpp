@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <vector>
 #include <cstdint>
-#include <algorithms>
+#include <algorithm>
 
 #include "../domains/map_pathfinding/map_pathfinding_transitions.h"
 #include "../domains/map_pathfinding/map_manhattan_distance.h"
