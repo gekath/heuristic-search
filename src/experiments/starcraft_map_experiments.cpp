@@ -45,7 +45,7 @@ double compute_median(vector<int> scores) {
 double compute_average(vector<int> scores) {
 
     int sum = 0 ;
-    int i;
+    unsigned int i;
     size_t size = scores.size();
 
     for (i = 0; i < size; i ++) {
