@@ -18,6 +18,7 @@
 #include "../algorithms/best_first_search/weighted_a.h"
 #include "../algorithms/best_first_search/gbfs.h"
 #include "../utils/string_utils.h"
+#include "../utils/vector_ops.h"
 
 using namespace std;
 
