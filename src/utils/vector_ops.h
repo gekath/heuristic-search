@@ -14,8 +14,8 @@
 #include <vector>
 #include "vector_ops.h"
 
-double compute_median(std::vector<int> scores);
+double compute_median(std::vector<int, std::allocator<int> >  scores);
 
-double compute_average(std::vector<int> average);
+double compute_average(std::vector<int, std::allocator<int> >  average);
 
 #endif /* VECTOR_OPS_H_ */
