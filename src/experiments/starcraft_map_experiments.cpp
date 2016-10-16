@@ -187,7 +187,7 @@ int main(int argc, char **argv)
     int high_g_count;
     for (i = 0; i < default_nodes.size(); i++) {
 
-        min_val = min({default_nodes[i], low_g_nodes[i], high_g_nodes[i]});
+        int min_val = min({default_nodes[i], low_g_nodes[i], high_g_nodes[i]});
 
         if (default_nodes[i] == min_val) {
             default_count = default_count + 1;
