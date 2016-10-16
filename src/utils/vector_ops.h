@@ -7,16 +7,15 @@
  *      Author: Rick Valenzano
  */
 
-#ifndef MEDIAN_H_
-#define MEDIAN_H_
+#ifndef VECTOR_OPS_H_
+#define VECTOR_OPS_H_
 
 #include <stdio.h>
 #include <vector>
-#include <algorithms>
 #include "vector_ops.h"
 
 double compute_median(vector<int> scores);
 
 double compute_average(vector<int> average);
 
-#endif /* MEDIAN_H */
+#endif /* VECTOR_OPS_H_ */

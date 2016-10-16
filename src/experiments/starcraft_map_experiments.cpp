@@ -74,8 +74,8 @@ int main(int argc, char **argv)
     a_low_g.setTieBreaker(1);
     a_high_g.setTieBreaker(2);
 
-    weighted_a.setHeuristic(&manhattan);
-    gbfs.setHeuristic(&manhattan);
+    // weighted_a.setHeuristic(&manhattan);
+    // gbfs.setHeuristic(&manhattan);
 
     starts.clear();
     goals.clear();
