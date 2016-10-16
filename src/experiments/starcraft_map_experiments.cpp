@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <vector>
 #include <cstdint>
+#include <algorithms>
 
 #include "../domains/map_pathfinding/map_pathfinding_transitions.h"
 #include "../domains/map_pathfinding/map_manhattan_distance.h"
@@ -43,7 +44,7 @@ double compute_median(vector<int> scores) {
 double compute_average(vector<int> scores) {
 
     int sum = 0 ;
-    int i;
+    unsigned int i;
     size_t size = scores.size();
 
     for (i = 0; i < size; i ++) {
