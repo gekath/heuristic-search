@@ -138,7 +138,13 @@ int main(int argc, char **argv)
     low_g_median = compute_median(low_g_nodes);
     high_g_median = compute_median(high_g_nodes);
 
+
+    default_avg = compute_average(default_nodes);
+    low_g_avg = compute_average(low_g_nodes);
+    high_g_avg = compute_average(high_g_nodes);
+
     cout << default_median << "\t" << low_g_median << "\t" << high_g_median << endl;
+    cout << default_avg << "\t" << low_g_avg << "\t" << high_g_avg << endl;
 
 
 
