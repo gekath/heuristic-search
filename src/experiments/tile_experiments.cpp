@@ -284,8 +284,8 @@ int main(int argc, char **argv)
     vector<double> nodes = compute_percent(a1_nodes, a1_nodes_low, a1_nodes_high);
     vector<double> cost = compute_percent(a1_cost, a1_cost_low, a1_cost_high);
 
-    gbfs_percent_nodes = compute_percent(gbfs_nodes, gbfs_nodes_low, gbfs_nodes_high);
-    gbfs_percent_cost = compute_percent(gbfs_cost, gbfs_cost_low, gbfs_cost_high);
+    vector<double> gbfs_percent_nodes = compute_percent(gbfs_nodes, gbfs_nodes_low, gbfs_nodes_high);
+    vector<double> gbfs_percent_cost = compute_percent(gbfs_cost, gbfs_cost_low, gbfs_cost_high);
 
     // unsigned int i;
     // double default_count = 0;
