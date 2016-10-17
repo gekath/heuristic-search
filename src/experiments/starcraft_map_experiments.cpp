@@ -59,36 +59,37 @@ double compute_average(vector<int> scores) {
 
 int main(int argc, char **argv)
 {
-    AStar<MapLocation, MapDir> a_star;
-    AStar<MapLocation, MapDir> a_low_g;
-    AStar<MapLocation, MapDir> a_high_g;
 
-    // WeightedAStar<MapLocation, MapDir> weighted_a;
-    // GBFS<MapLocation, MapDir> gbfs;
+    int tiebreaker = 0;
+    double weight = 1;
+
+    if (argc > 1) {
+        tiebreaker = atoi(argv[1]);
+    } if (argc > 2) {
+        weight = atoi(argv[2]);
+    }
+
+
+    // AStar<MapLocation, MapDir> a_star;
+    // AStar<MapLocation, MapDir> a_low_g;
+    // AStar<MapLocation, MapDir> a_high_g;
+
+    WeightedAStar<MapLocation, MapDir> a_star;
 
     MapPathfindingTransitions map_ops;
     a_star.setTransitionSystem(&map_ops);
-    a_low_g.setTransitionSystem(&map_ops);
-    a_high_g.setTransitionSystem(&map_ops);
-    
-    // weighted_a.setTransitionSystem(&map_ops);
-    // gbfs.setTransitionSystem(&map_ops);
+    // a_low_g.setTransitionSystem(&map_ops);
+    // a_high_g.setTransitionSystem(&map_ops);
 
     SingleGoalTest<MapLocation> goal_test(MapLocation(0, 0));
     a_star.setGoalTest(&goal_test);
-    a_low_g.setGoalTest(&goal_test);
-    a_high_g.setGoalTest(&goal_test);
-
-    // weighted_a.setGoalTest(&goal_test);
-    // gbfs.setGoalTest(&goal_test);
+    // a_low_g.setGoalTest(&goal_test);
+    // a_high_g.setGoalTest(&goal_test);
 
     MapLocHashFunction map_hash;
     a_star.setHashFunction(&map_hash);
-    a_low_g.setHashFunction(&map_hash);
-    a_high_g.setHashFunction(&map_hash);
-
-    // weighted_a.setHashFunction(&map_hash);
-    // gbfs.setHashFunction(&map_hash);
+    // a_low_g.setHashFunction(&map_hash);
+    // a_high_g.setHashFunction(&map_hash);
 
     MapManhattanDistance manhattan;
 
@@ -102,23 +103,19 @@ int main(int argc, char **argv)
     map_hash.setMapDimensions(map_ops);
 
     a_star.setHeuristic(&manhattan);
-    a_low_g.setHeuristic(&manhattan);
-    a_high_g.setHeuristic(&manhattan);
+    // a_low_g.setHeuristic(&manhattan);
+    // a_high_g.setHeuristic(&manhattan);
 
-
-    a_star.setTieBreaker(0);
-    a_low_g.setTieBreaker(1);
-    a_high_g.setTieBreaker(2);
-
-    // weighted_a.setHeuristic(&manhattan);
-    // gbfs.setHeuristic(&manhattan);
+    a_star.setWeights(weight);
+    a_star.setTieBreaker(tiebreaker);
 
     starts.clear();
     goals.clear();
     read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/starcraft_bgh.probs", starts, goals);
     assert(starts.size() == goals.size());
 
-    vector<int> default_nodes(starts.size());
+    vector<int> node_count(starts.size());
+    vector<int> unique_count(starts.size());
 
     for(unsigned i = 0; i < starts.size(); i++) {
         goal_test.setGoal(goals[i]);
@@ -126,84 +123,58 @@ int main(int argc, char **argv)
 
         a_star.getPlan(starts[i], solution);
 
-        int goal_test_count = a_star.getGoalTestCount();
-
-        default_nodes[i] = goal_test_count;
-
-        // prints stats (using goal test count as measure of number of expansions)
-        cout << a_star.getLastPlanCost() << "\t" << goal_test_count << "\t" << a_star.getUniqueGoalTests()
-                << endl;
-    }
-
-    vector<int> low_g_nodes(starts.size());
-
-    for(unsigned i = 0; i < starts.size(); i++) {
-        goal_test.setGoal(goals[i]);
-        manhattan.setGoal(goals[i]);
-
-        a_low_g.getPlan(starts[i], solution);
-
-        int goal_test_count = a_low_g.getGoalTestCount();
-
-        low_g_nodes[i] = goal_test_count;
-
-        // prints stats (using goal test count as measure of number of expansions)
-        cout << a_low_g.getLastPlanCost() << "\t" << goal_test_count << "\t" << a_low_g.getUniqueGoalTests()
-                << endl;
-    }
-
-    vector<int> high_g_nodes(starts.size());
-
-    for(unsigned i = 0; i < starts.size(); i++) {
-        goal_test.setGoal(goals[i]);
-        manhattan.setGoal(goals[i]);
-
-        a_high_g.getPlan(starts[i], solution);
-
-        int goal_test_count = a_high_g.getGoalTestCount();
-
-        high_g_nodes[i] = goal_test_count;
-
-        // prints stats (using goal test count as measure of number of expansions)
-        cout << a_high_g.getLastPlanCost() << "\t" << goal_test_count << "\t" << a_high_g.getUniqueGoalTests()
-                << endl;
-    }
-
-    double default_median = compute_median(default_nodes);
-    double low_g_median = compute_median(low_g_nodes);
-    double high_g_median = compute_median(high_g_nodes);
-
-
-    double default_avg = compute_average(default_nodes);
-    double low_g_avg = compute_average(low_g_nodes);
-    double high_g_avg = compute_average(high_g_nodes);
-
-    cout << default_median << "\t" << low_g_median << "\t" << high_g_median << endl;
-    cout << default_avg << "\t" << low_g_avg << "\t" << high_g_avg << endl;
-
-    unsigned int i;
-    double default_count = 0;
-    double low_g_count = 0;
-    double high_g_count = 0;
-    for (i = 0; i < default_nodes.size(); i++) {
-
-        int min_val = min({default_nodes[i], low_g_nodes[i], high_g_nodes[i]});
-
-        if (default_nodes[i] == min_val) {
-            default_count++;
-        } else if (low_g_nodes[i] == min_val) {
-            low_g_count++;
-        } else if (high_g_nodes[i] == min_val) {
-            high_g_count++;
-        }         
-
-       cout << default_nodes[i] << "\t" << low_g_nodes[i] << "\t" << high_g_nodes[i] << endl; 
+        node_count[i] = a_star.getGoalTestCount();
+        unique_count[i] = a_star.getUniqueGoalTests();
 
     }
 
-    cout << "Number of problems: " << default_nodes.size() << endl;
-    cout << "High g count: " << high_g_count << endl;
-    cout << default_count << "\t" << low_g_count << "\t" <<  high_g_count << endl;
+    double median_nodes = compute_median(node_count);
+    double average_nodes = compute_average(node_count);
+    double median_unique = compute_median(unique_count);
+    double average_unique = compute_average(unique_count);
+
+
+    cout << "Weighted A Star, weight = " << weight << endl;
+    cout << "Median nodes: " << median_nodes << endl;
+    cout << "Average nodes: " << average_nodes << endl;
+    cout << "Median unique cost: " << median_unique << endl;
+    cout << "Average unique cost: " << average_unique << endl;
+
+    // double default_median = compute_median(default_nodes);
+    // double low_g_median = compute_median(low_g_nodes);
+    // double high_g_median = compute_median(high_g_nodes);
+
+
+    // double default_avg = compute_average(default_nodes);
+    // double low_g_avg = compute_average(low_g_nodes);
+    // double high_g_avg = compute_average(high_g_nodes);
+
+    // cout << default_median << "\t" << low_g_median << "\t" << high_g_median << endl;
+    // cout << default_avg << "\t" << low_g_avg << "\t" << high_g_avg << endl;
+
+    // unsigned int i;
+    // double default_count = 0;
+    // double low_g_count = 0;
+    // double high_g_count = 0;
+    // for (i = 0; i < default_nodes.size(); i++) {
+
+    //     int min_val = min({default_nodes[i], low_g_nodes[i], high_g_nodes[i]});
+
+    //     if (default_nodes[i] == min_val) {
+    //         default_count++;
+    //     } else if (low_g_nodes[i] == min_val) {
+    //         low_g_count++;
+    //     } else if (high_g_nodes[i] == min_val) {
+    //         high_g_count++;
+    //     }         
+
+    //    cout << default_nodes[i] << "\t" << low_g_nodes[i] << "\t" << high_g_nodes[i] << endl; 
+
+    // }
+
+    // cout << "Number of problems: " << default_nodes.size() << endl;
+    // cout << "High g count: " << high_g_count << endl;
+    // cout << default_count << "\t" << low_g_count << "\t" <<  high_g_count << endl;
 
 
 

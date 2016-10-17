@@ -151,10 +151,10 @@ public:
     virtual NodeID addNewNodeToOpen(const state_t &state, const action_t &action, StateHash hash_value, double g,
             double h, double node_eval, NodeID parent);
 
-    virtual NodeID addLowGToOpen(const state_t &state, const action_t &action, StateHash hash_value, double g,
-            double h, double node_eval, NodeID parent);
-    virtual NodeID addHighGToOpen(const state_t &state, const action_t &action, StateHash hash_value, double g,
-            double h, double node_eval, NodeID parent);
+    // virtual NodeID addLowGToOpen(const state_t &state, const action_t &action, StateHash hash_value, double g,
+    //         double h, double node_eval, NodeID parent);
+    // virtual NodeID addHighGToOpen(const state_t &state, const action_t &action, StateHash hash_value, double g,
+    //         double h, double node_eval, NodeID parent);
     /**
      * Adds the initial node with the given attributes to the open list.
      *
@@ -335,92 +335,92 @@ NodeID OpenClosedList<state_t, action_t>::addNewNodeToOpen(const state_t& state,
     return new_id;
 }
 
-template<class state_t, class action_t>
-NodeID OpenClosedList<state_t, action_t>::addLowGToOpen(const state_t& state, const action_t &action,
-        StateHash hash_value, double g, double h, double node_eval, NodeID parent)
-{
-    NodeID new_id = node_table.addNewSearchNode(
-            BFSNode<state_t, action_t>(state, parent, action, g, h, node_eval, open_list_heap.size()), hash_value);
+// template<class state_t, class action_t>
+// NodeID OpenClosedList<state_t, action_t>::addLowGToOpen(const state_t& state, const action_t &action,
+//         StateHash hash_value, double g, double h, double node_eval, NodeID parent)
+// {
+//     NodeID new_id = node_table.addNewSearchNode(
+//             BFSNode<state_t, action_t>(state, parent, action, g, h, node_eval, open_list_heap.size()), hash_value);
 
-    //std::cout << "New ID " << new_id << std::endl;
-    //std::cout << "Node Table Size " << node_table.size() << std::endl;
+//     //std::cout << "New ID " << new_id << std::endl;
+//     //std::cout << "Node Table Size " << node_table.size() << std::endl;
 
-    std::vector<unsigned int>::reverse_iterator rit;
+//     std::vector<unsigned int>::reverse_iterator rit;
 
-    for (rit = open_list_heap.rbegin(); rit != open_list_heap.rend(); ++rit) {
+//     for (rit = open_list_heap.rbegin(); rit != open_list_heap.rend(); ++rit) {
 
-        unsigned int i = std::distance(open_list_heap.begin(), rit.base()) - 1;
-        std::cout << "eval" << i << "\t" << getNode(open_list_heap[i]).eval << "\t" << node_eval << std::endl;
-        std::cout << "g" << i << "\t" << getNode(open_list_heap[i]).g_cost << "\t" << g << std::endl;
-
-
-        // Iterate from the end of the list. Appending new costs, should be at least the cost of 
-        // the last item in the open list. 
-
-        // If not equal, just append to the end
-        if (!fp_equal(getNode(open_list_heap[i]).eval, node_eval)) {
-
-            // std::cout << it.base() << std::endl;
-            break;
-        } else if (fp_less(g, getNode(open_list_heap[i]).g_cost)){
-            // std::cout << "here" << std::endl;
-            break;
-        } else if (fp_equal(g, getNode(open_list_heap[i]).g_cost)) {
-            // Create list, pick randomly
-        }
-    }
-
-    open_list_heap.insert(rit.base(), new_id);
-
-    heapifyUp(open_list_heap.size() - 1);
-
-    //printOpen();
-    //std::cout << std::endl;
-
-    return new_id;
-}
-
-template<class state_t, class action_t>
-NodeID OpenClosedList<state_t, action_t>::addHighGToOpen(const state_t& state, const action_t &action,
-        StateHash hash_value, double g, double h, double node_eval, NodeID parent)
-{
-    NodeID new_id = node_table.addNewSearchNode(
-            BFSNode<state_t, action_t>(state, parent, action, g, h, node_eval, open_list_heap.size()), hash_value);
-
-    //std::cout << "New ID " << new_id << std::endl;
-    //std::cout << "Node Table Size " << node_table.size() << std::endl;
-
-    std::vector<unsigned int>::reverse_iterator it;
-
-    for (it = open_list_heap.rbegin(); it != open_list_heap.rend(); ++it) {
-
-        unsigned int i = it.base() - open_list_heap.begin() - 1;
-        std::cout << "eval" << i << "\t" << getNode(open_list_heap[i]).eval << "\t" << node_eval << std::endl;
-        std::cout << "g" << i << "\t" << getNode(open_list_heap[i]).g_cost << "\t" << g << std::endl;
+//         unsigned int i = std::distance(open_list_heap.begin(), rit.base()) - 1;
+//         std::cout << "eval" << i << "\t" << getNode(open_list_heap[i]).eval << "\t" << node_eval << std::endl;
+//         std::cout << "g" << i << "\t" << getNode(open_list_heap[i]).g_cost << "\t" << g << std::endl;
 
 
-        // Iterate from the end of the list. Appending new costs, should be at least the cost of 
-        // the last item in the open list. 
+//         // Iterate from the end of the list. Appending new costs, should be at least the cost of 
+//         // the last item in the open list. 
 
-        // If not equal, just append to the end
-        if (!fp_equal(getNode(open_list_heap[i]).eval, node_eval)) {
+//         // If not equal, just append to the end
+//         if (!fp_equal(getNode(open_list_heap[i]).eval, node_eval)) {
 
-            // std::cout << it.base() << std::endl;
-            break;
-        } else if (!fp_less(g, getNode(open_list_heap[i]).g_cost)){
-            // std::cout << "here" << std::endl;
-            break;
-        }
-    }
-    open_list_heap.insert(it.base(), new_id);
+//             // std::cout << it.base() << std::endl;
+//             break;
+//         } else if (fp_less(g, getNode(open_list_heap[i]).g_cost)){
+//             // std::cout << "here" << std::endl;
+//             break;
+//         } else if (fp_equal(g, getNode(open_list_heap[i]).g_cost)) {
+//             // Create list, pick randomly
+//         }
+//     }
+
+//     open_list_heap.insert(rit.base(), new_id);
+
+//     heapifyUp(open_list_heap.size() - 1);
+
+//     //printOpen();
+//     //std::cout << std::endl;
+
+//     return new_id;
+// }
+
+// template<class state_t, class action_t>
+// NodeID OpenClosedList<state_t, action_t>::addHighGToOpen(const state_t& state, const action_t &action,
+//         StateHash hash_value, double g, double h, double node_eval, NodeID parent)
+// {
+//     NodeID new_id = node_table.addNewSearchNode(
+//             BFSNode<state_t, action_t>(state, parent, action, g, h, node_eval, open_list_heap.size()), hash_value);
+
+//     //std::cout << "New ID " << new_id << std::endl;
+//     //std::cout << "Node Table Size " << node_table.size() << std::endl;
+
+//     std::vector<unsigned int>::reverse_iterator it;
+
+//     for (it = open_list_heap.rbegin(); it != open_list_heap.rend(); ++it) {
+
+//         unsigned int i = it.base() - open_list_heap.begin() - 1;
+//         std::cout << "eval" << i << "\t" << getNode(open_list_heap[i]).eval << "\t" << node_eval << std::endl;
+//         std::cout << "g" << i << "\t" << getNode(open_list_heap[i]).g_cost << "\t" << g << std::endl;
+
+
+//         // Iterate from the end of the list. Appending new costs, should be at least the cost of 
+//         // the last item in the open list. 
+
+//         // If not equal, just append to the end
+//         if (!fp_equal(getNode(open_list_heap[i]).eval, node_eval)) {
+
+//             // std::cout << it.base() << std::endl;
+//             break;
+//         } else if (!fp_less(g, getNode(open_list_heap[i]).g_cost)){
+//             // std::cout << "here" << std::endl;
+//             break;
+//         }
+//     }
+//     open_list_heap.insert(it.base(), new_id);
     
-    heapifyUp(open_list_heap.size() - 1);
+//     heapifyUp(open_list_heap.size() - 1);
 
-    //printOpen();
-    //std::cout << std::endl;
+//     //printOpen();
+//     //std::cout << std::endl;
 
-    return new_id;
-}
+//     return new_id;
+// }
 
 template<class state_t, class action_t>
 inline std::size_t OpenClosedList<state_t, action_t>::openListSize() const
@@ -521,7 +521,6 @@ NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
 
     // std::vector<int> tied_g_vals;
     // int tie_g_count = 0;
-
 
     if (open_list_heap.size() > 1) {
         for (i = 1; i < open_list_heap.size(); i++) {

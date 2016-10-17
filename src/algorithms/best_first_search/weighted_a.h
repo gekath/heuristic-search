@@ -40,7 +40,13 @@ inline WeightedAStar<state_t, action_t>::~WeightedAStar()
 template<class state_t, class action_t>
 inline double WeightedAStar<state_t, action_t>::nodeEval(const state_t& state, double g_cost, double h_cost)
 {
-    return g_cost + weight * h_cost;
+
+	if (weight == -1) {
+		return h_cost;
+	} else {
+
+    	return g_cost + weight * h_cost;
+	}
 }
 
 template<class state_t, class action_t>

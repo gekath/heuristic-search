@@ -105,108 +105,81 @@ int main(int argc, char **argv)
 
      // default 0, low g 1, high g 2
     int tiebreaker = 0;
-    // double weight = 1;
+    double weight = 1;
 
     if (argc > 1) { 
         tiebreaker = atoi(argv[1]);
-    // } if (argc > 2) {
-    //     weight = atoi(argv[2]);
+    } if (argc > 2) {
+        weight = atoi(argv[2]);
     }
 
-    // WeightedAStar<TilePuzzleState, BlankSlide> a_1;
+    WeightedAStar<TilePuzzleState, BlankSlide> a_1;
     // WeightedAStar<TilePuzzleState, BlankSlide> a_low;
     // WeightedAStar<TilePuzzleState, BlankSlide> a_high;
-    GBFS<TilePuzzleState, BlankSlide> gbfs;
-    // GBFS<TilePuzzleState, BlankSlide> gbfs_low;
-    // GBFS<TilePuzzleState, BlankSlide> gbfs_high;
 
     TilePuzzleTransitions tile_ops(3, 4);
-    // a_1.setTransitionSystem(&tile_ops);
+    a_1.setTransitionSystem(&tile_ops);
     // a_low.setTransitionSystem(&tile_ops);
     // a_high.setTransitionSystem(&tile_ops);
-    gbfs.setTransitionSystem(&tile_ops);
-    // gbfs_low.setTransitionSystem(&tile_ops);
-    // gbfs_high.setTransitionSystem(&tile_ops);
 
     TilePuzzleState goal_state(3, 4);
 
     SingleGoalTest<TilePuzzleState> goal_test(goal_state);
-    // a_1.setGoalTest(&goal_test);
+    a_1.setGoalTest(&goal_test);
     // a_low.setGoalTest(&goal_test);
     // a_high.setGoalTest(&goal_test);
-    gbfs.setGoalTest(&goal_test);
-    // gbfs_low.setGoalTest(&goal_test);
-    // gbfs_high.setGoalTest(&goal_test);
 
     PermutationHashFunction<TilePuzzleState> tile_hash;
-    // a_1.setHashFunction(&tile_hash);
+    a_1.setHashFunction(&tile_hash);
     // a_low.setHashFunction(&tile_hash);
     // a_high.setHashFunction(&tile_hash);
-    gbfs.setHashFunction(&tile_hash);
-    // gbfs_low.setHashFunction(&tile_hash);
-    // gbfs_high.setHashFunction(&tile_hash);
 
     TileManhattanDistance manhattan(goal_state, tile_ops);
-    // a_1.setHeuristic(&manhattan);
+    a_1.setHeuristic(&manhattan);
     // a_low.setHeuristic(&manhattan);
     // a_high.setHeuristic(&manhattan);
-    gbfs.setHeuristic(&manhattan);
-    // gbfs_low.setHeuristic(&manhattan);
-    // gbfs_high.setHeuristic(&manhattan);
 
-    // a_1.setTieBreaker(tiebreaker);
+    a_1.setTieBreaker(tiebreaker);
     // a_low.setTieBreaker(1);
     // a_high.setTieBreaker(2);
-    gbfs.setTieBreaker(tiebreaker);
-    // gbfs_low.setTieBreaker(1);
-    // gbfs_high.setTieBreaker(2);
 
-    // a_1.setWeights(weight);
+    a_1.setWeights(weight);
     // a_low.setWeights(weight);
     // a_high.setWeights(weight);
 
-    // vector<vector<unsigned> > starts_low;
-    // vector<vector<unsigned> > starts_high;
+    vector<BlankSlide> solution;
+    vector<vector<unsigned> > starts;
 
-    vector<int> node_count(100);
-    // vector<int> gbfs_nodes(starts.size());
-    // vector<int> gbfs_cost(starts.size());
+    read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
 
-    for (unsigned iter = 0; iter < 100; iter++) {
+    vector<int> node_count(starts.size());
+    vector<int> cost_count(starts.size());
+    vector<int> gbfs_nodes(starts.size());
+    vector<int> gbfs_cost(starts.size());
 
-        vector<BlankSlide> solution;
-        vector<vector<unsigned> > starts;
-        read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
+    for (unsigned i = 0; i < starts.size(); i++) {        
 
-        TilePuzzleState start_state(starts[27], 3, 4);
+        TilePuzzleState start_state(starts[i], 3, 4);
 
-        // a_1.getPlan(start_state, solution);
-        gbfs.getPlan(start_state, solution);
+        a_1.getPlan(start_state, solution);
 
-        // node_count[iter] = a_1.getGoalTestCount();
-            // a1_nodes[i] = a_1.getGoalTestCount();
-        node_count[iter] = gbfs.getGoalTestCount();
+        node_count[i] = a_1.getGoalTestCount();
 
-            // int cur_cost = a_1.getLastPlanCost();
-            // a1_cost[i] = cur_cost;make
-            // gbfs_cost[i] = gbfs.getLastPlanCost();
-
+        cost_count[i] = a_1.getLastPlanCost();
 
     }
 
     double median_nodes = compute_median(node_count);
-    // double gbfs_median_nodes = compute_median(gbfs_nodes);
-
     double average_nodes = compute_average(node_count);
-    // double gbfs_average_nodes = compute_average(gbfs_nodes);
+    double median_cost = compute_median(cost_count);
+    double average_cost = compute_average(cost_count);
 
-    double variance_nodes = compute_variance(node_count, average_nodes);
 
-    // cout << "Weighted A Star, weight = " << weight << endl;
-    cout << "GBFS" << endl;
+    cout << "Weighted A Star, weight = " << weight << endl;
     cout << "Median nodes: " << median_nodes << endl;
     cout << "Average nodes: " << average_nodes << endl;
-    cout << "Variance nodes: " << variance_nodes << endl;
+    cout << "Median cost: " << median_cost << endl;
+    cout << "Average cost: " << average_cost << endl;
 
     // read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts_low);
 
