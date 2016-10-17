@@ -157,6 +157,8 @@ int main(int argc, char **argv)
     vector<BlankSlide> solution;
 
     vector<vector<unsigned> > starts;
+    vector<vector<unsigned> > starts_low;
+    vector<vector<unsigned> > starts_high;
 
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
 
@@ -205,10 +207,10 @@ int main(int argc, char **argv)
     vector<int> gbfs_nodes_low(starts.size());
     vector<int> gbfs_cost_low(starts.size());
 
-    read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
+    read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts_low);
 
-    for(unsigned i = 0; i < starts.size(); i++) {
-        TilePuzzleState start_state(starts[i], 3, 4);
+    for(unsigned i = 0; i < starts_low.size(); i++) {
+        TilePuzzleState start_state(starts_low[i], 3, 4);
 
         a_low.getPlan(start_state, solution);
         gbfs_low.getPlan(start_state, solution);
@@ -240,16 +242,15 @@ int main(int argc, char **argv)
     cout << "Average cost: " << a1_average_cost_low << endl;
     
 
-    vector<int> a1_nodes_high(starts.size());
-    vector<int> a1_cost_high(starts.size());
-    vector<int> gbfs_nodes_high(starts.size());
-    vector<int> gbfs_cost_high(starts.size());
+    vector<int> a1_nodes_high(starts_high.size());
+    vector<int> a1_cost_high(starts_high.size());
+    vector<int> gbfs_nodes_high(starts_high.size());
+    vector<int> gbfs_cost_high(starts_high.size());
 
-    starts.clear();
-    read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
+    read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts_high);
 
-    for(unsigned i = 0; i < starts.size(); i++) {
-        TilePuzzleState start_state(starts[i], 3, 4);
+    for(unsigned i = 0; i < starstarts_hights.size(); i++) {
+        TilePuzzleState start_state(stastarts_highrts[i], 3, 4);
 
         a_high.getPlan(start_state, solution);
         gbfs_high.getPlan(start_state, solution);
