@@ -249,8 +249,8 @@ int main(int argc, char **argv)
 
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts_high);
 
-    for(unsigned i = 0; i < starstarts_hights.size(); i++) {
-        TilePuzzleState start_state(stastarts_highrts[i], 3, 4);
+    for(unsigned i = 0; i < starts_high.size(); i++) {
+        TilePuzzleState start_state(starts_high[i], 3, 4);
 
         a_high.getPlan(start_state, solution);
         gbfs_high.getPlan(start_state, solution);
