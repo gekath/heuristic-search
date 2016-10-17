@@ -105,17 +105,17 @@ int main(int argc, char **argv)
     WeightedAStar<TilePuzzleState, BlankSlide> a_1;
     WeightedAStar<TilePuzzleState, BlankSlide> a_low;
     WeightedAStar<TilePuzzleState, BlankSlide> a_high;
-    GBFS<TilePuzzleState, BlankSlide> gbfs;
-    GBFS<TilePuzzleState, BlankSlide> gbfs_low;
-    GBFS<TilePuzzleState, BlankSlide> gbfs_high;
+    // GBFS<TilePuzzleState, BlankSlide> gbfs;
+    // GBFS<TilePuzzleState, BlankSlide> gbfs_low;
+    // GBFS<TilePuzzleState, BlankSlide> gbfs_high;
 
     TilePuzzleTransitions tile_ops(3, 4);
     a_1.setTransitionSystem(&tile_ops);
     a_low.setTransitionSystem(&tile_ops);
     a_high.setTransitionSystem(&tile_ops);
-    gbfs.setTransitionSystem(&tile_ops);
-    gbfs_low.setTransitionSystem(&tile_ops);
-    gbfs_high.setTransitionSystem(&tile_ops);
+    // gbfs.setTransitionSystem(&tile_ops);
+    // gbfs_low.setTransitionSystem(&tile_ops);
+    // gbfs_high.setTransitionSystem(&tile_ops);
 
     TilePuzzleState goal_state(3, 4);
 
@@ -123,32 +123,32 @@ int main(int argc, char **argv)
     a_1.setGoalTest(&goal_test);
     a_low.setGoalTest(&goal_test);
     a_high.setGoalTest(&goal_test);
-    gbfs.setGoalTest(&goal_test);
-    gbfs_low.setGoalTest(&goal_test);
-    gbfs_high.setGoalTest(&goal_test);
+    // gbfs.setGoalTest(&goal_test);
+    // gbfs_low.setGoalTest(&goal_test);
+    // gbfs_high.setGoalTest(&goal_test);
 
     PermutationHashFunction<TilePuzzleState> tile_hash;
     a_1.setHashFunction(&tile_hash);
     a_low.setHashFunction(&tile_hash);
     a_high.setHashFunction(&tile_hash);
-    gbfs.setHashFunction(&tile_hash);
-    gbfs_low.setHashFunction(&tile_hash);
-    gbfs_high.setHashFunction(&tile_hash);
+    // gbfs.setHashFunction(&tile_hash);
+    // gbfs_low.setHashFunction(&tile_hash);
+    // gbfs_high.setHashFunction(&tile_hash);
 
     TileManhattanDistance manhattan(goal_state, tile_ops);
     a_1.setHeuristic(&manhattan);
     a_low.setHeuristic(&manhattan);
     a_high.setHeuristic(&manhattan);
-    gbfs.setHeuristic(&manhattan);
-    gbfs_low.setHeuristic(&manhattan);
-    gbfs_high.setHeuristic(&manhattan);
+    // gbfs.setHeuristic(&manhattan);
+    // gbfs_low.setHeuristic(&manhattan);
+    // gbfs_high.setHeuristic(&manhattan);
 
     a_1.setTieBreaker(0);
     a_low.setTieBreaker(1);
     a_high.setTieBreaker(2);
-    gbfs.setTieBreaker(0);
-    gbfs_low.setTieBreaker(1);
-    gbfs_high.setTieBreaker(2);
+    // gbfs.setTieBreaker(0);
+    // gbfs_low.setTieBreaker(1);
+    // gbfs_high.setTieBreaker(2);
 
     a_1.setWeights(weight);
     a_low.setWeights(weight);
@@ -164,8 +164,8 @@ int main(int argc, char **argv)
 
     vector<int> a1_nodes(starts.size());
     vector<int> a1_cost(starts.size());
-    vector<int> gbfs_nodes(starts.size());
-    vector<int> gbfs_cost(starts.size());
+    // vector<int> gbfs_nodes(starts.size());
+    // vector<int> gbfs_cost(starts.size());
 
     cout << "here" << endl;
 
@@ -173,27 +173,27 @@ int main(int argc, char **argv)
         TilePuzzleState start_state(starts[i], 3, 4);
 
         a_1.getPlan(start_state, solution);
-        gbfs.getPlan(start_state, solution);
+        // gbfs.getPlan(start_state, solution);
 
         a1_nodes[i] = a_1.getGoalTestCount();
-        gbfs_nodes[i] = gbfs.getGoalTestCount();
+        // gbfs_nodes[i] = gbfs.getGoalTestCount();
 
         a1_cost[i] = a_1.getLastPlanCost();
-        gbfs_cost[i] = gbfs.getLastPlanCost();
+        // gbfs_cost[i] = gbfs.getLastPlanCost();
 
     }
 
     double a1_median_nodes = compute_median(a1_nodes);
-    double gbfs_median_nodes = compute_median(gbfs_nodes);
+    // double gbfs_median_nodes = compute_median(gbfs_nodes);
 
     double a1_average_nodes = compute_average(a1_nodes);
-    double gbfs_average_nodes = compute_average(gbfs_nodes);
+    // double gbfs_average_nodes = compute_average(gbfs_nodes);
 
     double a1_median_cost = compute_median(a1_cost);
-    double gbfs_median_cost = compute_median(gbfs_cost);
+    // double gbfs_median_cost = compute_median(gbfs_cost);
 
     double a1_average_cost = compute_average(a1_cost);
-    double gbfs_average_cost = compute_average(gbfs_cost);
+    // double gbfs_average_cost = compute_average(gbfs_cost);
 
     cout << "Weighted A Star, weight = " << weight << endl;
     cout << "==Default==" << endl;
@@ -202,40 +202,38 @@ int main(int argc, char **argv)
     cout << "Median cost: " << a1_median_cost << endl;
     cout << "Average cost: " << a1_average_cost << endl;
 
-
-
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts_low);
 
     vector<int> a1_nodes_low(starts_low.size());
     vector<int> a1_cost_low(starts_low.size());
-    vector<int> gbfs_nodes_low(starts_low.size());
-    vector<int> gbfs_cost_low(starts_low.size());
+    // vector<int> gbfs_nodes_low(starts_low.size());
+    // vector<int> gbfs_cost_low(starts_low.size());
 
     for(unsigned i = 0; i < starts_low.size(); i++) {
         TilePuzzleState start_state_low(starts_low[i], 3, 4);
 
         a_low.getPlan(start_state_low, solution);
-        gbfs_low.getPlan(start_state_low, solution);
+        // gbfs_low.getPlan(start_state_low, solution);
 
         a1_nodes_low[i] = a_low.getGoalTestCount();
-        gbfs_nodes_low[i] = gbfs_low.getGoalTestCount();
+        // gbfs_nodes_low[i] = gbfs_low.getGoalTestCount();
 
         a1_cost_low[i] = a_low.getLastPlanCost();
-        gbfs_cost_low[i] = gbfs_low.getLastPlanCost();
+        // gbfs_cost_low[i] = gbfs_low.getLastPlanCost();
 
     }
 
     double a1_median_nodes_low = compute_median(a1_nodes_low);
-    double gbfs_median_nodes_low = compute_median(gbfs_nodes_low);
+    // double gbfs_median_nodes_low = compute_median(gbfs_nodes_low);
 
     double a1_average_nodes_low = compute_average(a1_nodes_low);
-    double gbfs_average_nodes_low = compute_average(gbfs_nodes_low);
+    // double gbfs_average_nodes_low = compute_average(gbfs_nodes_low);
 
     double a1_median_cost_low = compute_median(a1_cost_low);
-    double gbfs_median_cost_low = compute_median(gbfs_cost_low);
+    // double gbfs_median_cost_low = compute_median(gbfs_cost_low);
 
     double a1_average_cost_low = compute_average(a1_cost_low);
-    double gbfs_average_cost_low = compute_average(gbfs_cost_low);
+    // double gbfs_average_cost_low = compute_average(gbfs_cost_low);
 
     cout << "==Low-G==" << endl;
     cout << "Median nodes: " << a1_median_nodes_low << endl;
@@ -247,35 +245,35 @@ int main(int argc, char **argv)
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts_high);
     vector<int> a1_nodes_high(starts_high.size());
     vector<int> a1_cost_high(starts_high.size());
-    vector<int> gbfs_nodes_high(starts_high.size());
-    vector<int> gbfs_cost_high(starts_high.size());
+    // vector<int> gbfs_nodes_high(starts_high.size());
+    // vector<int> gbfs_cost_high(starts_high.size());
 
 
     for(unsigned i = 0; i < starts_high.size(); i++) {
         TilePuzzleState start_state_high(starts_high[i], 3, 4);
 
         a_high.getPlan(start_state_high, solution);
-        gbfs_high.getPlan(start_state_high, solution);
+        // gbfs_high.getPlan(start_state_high, solution);
 
         a1_nodes_high[i] = a_high.getGoalTestCount();
-        gbfs_nodes_high[i] = gbfs_high.getGoalTestCount();
+        // gbfs_nodes_high[i] = gbfs_high.getGoalTestCount();
 
         a1_cost_high[i] = a_high.getLastPlanCost();
-        gbfs_cost_high[i] = gbfs_high.getLastPlanCost();
+        // gbfs_cost_high[i] = gbfs_high.getLastPlanCost();
 
     }
 
     double a1_median_nodes_high = compute_median(a1_nodes_high);
-    double gbfs_median_nodes_high = compute_median(gbfs_nodes_high);
+    // double gbfs_median_nodes_high = compute_median(gbfs_nodes_high);
 
     double a1_average_nodes_high = compute_average(a1_nodes_high);
-    double gbfs_average_nodes_high = compute_average(gbfs_nodes_high);
+    // double gbfs_average_nodes_high = compute_average(gbfs_nodes_high);
 
     double a1_median_cost_high = compute_median(a1_cost_high);
-    double gbfs_median_cost_high = compute_median(gbfs_cost_high);
+    // double gbfs_median_cost_high = compute_median(gbfs_cost_high);
 
     double a1_average_cost_high = compute_average(a1_cost_high);
-    double gbfs_average_cost_high = compute_average(gbfs_cost_high);
+    // double gbfs_average_cost_high = compute_average(gbfs_cost_high);
 
     cout << "==High-G==" << endl;
     cout << "Median nodes: " << a1_median_nodes_high << endl;
@@ -286,41 +284,8 @@ int main(int argc, char **argv)
     vector<double> nodes = compute_percent(a1_nodes, a1_nodes_low, a1_nodes_high);
     vector<double> cost = compute_percent(a1_cost, a1_cost_low, a1_cost_high);
 
-    vector<double> gbfs_percent_nodes = compute_percent(gbfs_nodes, gbfs_nodes_low, gbfs_nodes_high);
-    vector<double> gbfs_percent_cost = compute_percent(gbfs_cost, gbfs_cost_low, gbfs_cost_high);
-
-    // unsigned int i;
-    // double default_count = 0;
-    // double low_g_count = 0;
-    // double high_g_count = 0;
-
-    // double default_count_cost = 0;
-    // double low_g_count_cost = 0;
-    // double high_g_count_cost = 0;
-    // for (i = 0; i < a1_nodes.size(); i++) {
-
-    //     int min_val = min({a1_nodes[i], a1_nodes_low[i], a1_nodes_high[i]});
-
-    //     if (a1_nodes[i] == min_val) {
-    //         default_count++;
-    //     } else if (a1_nodes_low[i] == min_val) {
-    //         low_g_count++;
-    //     } else if (a1_nodes_high[i] == min_val) {
-    //         high_g_count++;
-    //     }         
-
-    //     int min_cost = min({a1_cost[i], a1_cost_low[i], a1_cost_high[i]});
-
-    //     if (a1_cost[i] == min_cost) {
-    //         default_count_cost++;
-    //     } else if (a1_cost_low[i] == min_cost) {
-    //         low_g_count_cost++;
-    //     } else if (a1_cost_high[i] == min_cost) {
-    //         high_g_count_cost++;
-    //     }         
-    //     // cout << default_nodes[i] << "\t" << low_g_nodes[i] << "\t" << high_g_nodes[i] << endl; 
-
-    // }
+    // vector<double> gbfs_percent_nodes = compute_percent(gbfs_nodes, gbfs_nodes_low, gbfs_nodes_high);
+    // vector<double> gbfs_percent_cost = compute_percent(gbfs_cost, gbfs_cost_low, gbfs_cost_high);
 
     cout << "Percent Node expansions" << endl;
     cout << "Default Low-G High-G" << endl;
@@ -330,34 +295,34 @@ int main(int argc, char **argv)
     cout << "Default Low-G High-G" << endl;
     cout << cost[0] << "\t" << cost[1] << "\t" << cost[2] << endl;
 
-    cout << "===========" << endl;
-    cout << "GBFS" << endl;
+    // cout << "===========" << endl;
+    // cout << "GBFS" << endl;
 
-    cout << "==Default==" << endl;
-    cout << "Median nodes: " << gbfs_median_nodes << endl;
-    cout << "Average nodes: " << gbfs_average_nodes << endl;
-    cout << "Median cost: " << gbfs_median_cost << endl;
-    cout << "Average cost: " << gbfs_average_cost << endl;
+    // cout << "==Default==" << endl;
+    // cout << "Median nodes: " << gbfs_median_nodes << endl;
+    // cout << "Average nodes: " << gbfs_average_nodes << endl;
+    // cout << "Median cost: " << gbfs_median_cost << endl;
+    // cout << "Average cost: " << gbfs_average_cost << endl;
 
-    cout << "==Low-G==" << endl;
-    cout << "Median nodes: " << gbfs_median_nodes_low << endl;
-    cout << "Average nodes: " << gbfs_average_nodes_low << endl;
-    cout << "Median cost: " << gbfs_median_cost_low << endl;
-    cout << "Average cost: " << gbfs_average_cost_low << endl;
+    // cout << "==Low-G==" << endl;
+    // cout << "Median nodes: " << gbfs_median_nodes_low << endl;
+    // cout << "Average nodes: " << gbfs_average_nodes_low << endl;
+    // cout << "Median cost: " << gbfs_median_cost_low << endl;
+    // cout << "Average cost: " << gbfs_average_cost_low << endl;
 
-    cout << "==High-G==" << endl;
-    cout << "Median nodes: " << gbfs_median_nodes_high << endl;
-    cout << "Average nodes: " << gbfs_average_nodes_high << endl;
-    cout << "Median cost: " << gbfs_median_cost_high << endl;
-    cout << "Average cost: " << gbfs_average_cost_high << endl;
+    // cout << "==High-G==" << endl;
+    // cout << "Median nodes: " << gbfs_median_nodes_high << endl;
+    // cout << "Average nodes: " << gbfs_average_nodes_high << endl;
+    // cout << "Median cost: " << gbfs_median_cost_high << endl;
+    // cout << "Average cost: " << gbfs_average_cost_high << endl;
     
-    cout << "Percent Node expansions" << endl;
-    cout << "Default Low-G High-G" << endl;
-    cout << gbfs_percent_nodes[0] << "\t" << gbfs_percent_nodes[1] << "\t" <<  gbfs_percent_nodes[2] << endl;
+    // cout << "Percent Node expansions" << endl;
+    // cout << "Default Low-G High-G" << endl;
+    // cout << gbfs_percent_nodes[0] << "\t" << gbfs_percent_nodes[1] << "\t" <<  gbfs_percent_nodes[2] << endl;
 
-    cout << "Percent Cost" << endl;
-    cout << "Default Low-G High-G" << endl;
-    cout << gbfs_percent_cost[0] << "\t" << gbfs_percent_cost[1] << "\t" << gbfs_percent_cost[2] << endl;
+    // cout << "Percent Cost" << endl;
+    // cout << "Default Low-G High-G" << endl;
+    // cout << gbfs_percent_cost[0] << "\t" << gbfs_percent_cost[1] << "\t" << gbfs_percent_cost[2] << endl;
 
 
 
