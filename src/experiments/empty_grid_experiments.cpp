@@ -104,49 +104,49 @@ int main(int argc, char **argv)
 
     }
 
-    cout << "Weighted A* Star Search" << endl;
+    // cout << "Weighted A* Star Search" << endl;
 
-    starts.clear();
-    goals.clear();
-    read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/empty_grid.probs", starts, goals);
-    assert(starts.size() == goals.size());
+    // starts.clear();
+    // goals.clear();
+    // read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/empty_grid.probs", starts, goals);
+    // assert(starts.size() == goals.size());
 
-    for(unsigned i = 0; i < starts.size(); i++) {
-        goal_test.setGoal(goals[i]);
-        manhattan.setGoal(goals[i]);
+    // for(unsigned i = 0; i < starts.size(); i++) {
+    //     goal_test.setGoal(goals[i]);
+    //     manhattan.setGoal(goals[i]);
 
-        weighted_a.getPlan(starts[i], solution);
+    //     weighted_a.getPlan(starts[i], solution);
 
-        // prints stats (using goal test count as measure of number of expansions)
-        // cout << a_star.getLastPlanCost() << "\t" << a_star.getGoalTestCount() << "\t" << a_star.getUniqueGoalTests()
-                // << endl;
+    //     // prints stats (using goal test count as measure of number of expansions)
+    //     // cout << a_star.getLastPlanCost() << "\t" << a_star.getGoalTestCount() << "\t" << a_star.getUniqueGoalTests()
+    //             // << endl;
 
-        cout << weighted_a.getLastPlanCost() << "\t" << weighted_a.getGoalTestCount() << "\t" << weighted_a.getUniqueGoalTests()
-                << endl;
+    //     cout << weighted_a.getLastPlanCost() << "\t" << weighted_a.getGoalTestCount() << "\t" << weighted_a.getUniqueGoalTests()
+    //             << endl;
 
-    }
+    // }
 
-    cout << "GBFS Search" << endl;
+    // cout << "GBFS Search" << endl;
 
-    starts.clear();
-    goals.clear();
-    read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/empty_grid.probs", starts, goals);
-    assert(starts.size() == goals.size());
+    // starts.clear();
+    // goals.clear();
+    // read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/empty_grid.probs", starts, goals);
+    // assert(starts.size() == goals.size());
 
-    for(unsigned i = 0; i < starts.size(); i++) {
-        goal_test.setGoal(goals[i]);
-        manhattan.setGoal(goals[i]);
+    // for(unsigned i = 0; i < starts.size(); i++) {
+    //     goal_test.setGoal(goals[i]);
+    //     manhattan.setGoal(goals[i]);
 
-        gbfs.getPlan(starts[i], solution);
+    //     gbfs.getPlan(starts[i], solution);
 
-        // prints stats (using goal test count as measure of number of expansions)
-        // cout << a_star.getLastPlanCost() << "\t" << a_star.getGoalTestCount() << "\t" << a_star.getUniqueGoalTests()
-                // << endl;
+    //     // prints stats (using goal test count as measure of number of expansions)
+    //     // cout << a_star.getLastPlanCost() << "\t" << a_star.getGoalTestCount() << "\t" << a_star.getUniqueGoalTests()
+    //             // << endl;
 
-        cout << gbfs.getLastPlanCost() << "\t" << gbfs.getGoalTestCount() << "\t" << gbfs.getUniqueGoalTests()
-                << endl;
+    //     cout << gbfs.getLastPlanCost() << "\t" << gbfs.getGoalTestCount() << "\t" << gbfs.getUniqueGoalTests()
+    //             << endl;
 
-    }
+    // }
 
     return 0;
 }
