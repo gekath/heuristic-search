@@ -70,9 +70,9 @@ vector<double> compute_percent(vector<int> a1_nodes, vector<int> a1_nodes_low, v
 
         if (a1_nodes[i] == min_val) {
             default_count++;
-        } else if (a1_nodes_low[i] == min_val) {
+        } if (a1_nodes_low[i] == min_val) {
             low_g_count++;
-        } else if (a1_nodes_high[i] == min_val) {
+        } if (a1_nodes_high[i] == min_val) {
             high_g_count++;
         }               
         // cout << default_nodes[i] << "\t" << low_g_nodes[i] << "\t" << high_g_nodes[i] << endl; 
