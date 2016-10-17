@@ -126,9 +126,7 @@ int main(int argc, char **argv)
     vector<vector<unsigned> > starts;
 
     starts.clear();
-    goals.clear();
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
-    assert(starts.size() == goals.size());
 
     vector<int> a1_nodes(starts.size());
     vector<int> a1_cost(starts.size());
@@ -180,9 +178,7 @@ int main(int argc, char **argv)
     vector<int> gbfs_cost_low(starts.size());
 
     starts.clear();
-    goals.clear();
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
-    assert(starts.size() == goals.size());
 
     for(unsigned i = 0; i < starts.size(); i++) {
         TilePuzzleState start_state(starts[i], 3, 4);
@@ -224,9 +220,7 @@ int main(int argc, char **argv)
     vector<int> gbfs_cost_high(starts.size());
 
     starts.clear();
-    goals.clear();
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
-    assert(starts.size() == goals.size());
 
     for(unsigned i = 0; i < starts.size(); i++) {
         TilePuzzleState start_state(starts[i], 3, 4);
@@ -267,7 +261,7 @@ int main(int argc, char **argv)
     double high_g_count = 0;
 
     double default_count_cost = 0;
-    double low_g_count_cpst = 0;
+    double low_g_count_cost = 0;
     double high_g_count_cost = 0;
     for (i = 0; i < a1_nodes.size(); i++) {
 
