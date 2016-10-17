@@ -190,18 +190,15 @@ int main(int argc, char **argv)
     double a1_average_cost = compute_average(a1_cost);
     double gbfs_average_cost = compute_average(gbfs_cost);
 
-    cout << "==Default==" << endl;
+
     cout << "Weighted A Star, weight = " << weight << endl;
+    cout << "==Default==" << endl;
     cout << "Median nodes: " << a1_median_nodes << endl;
     cout << "Average nodes: " << a1_average_nodes << endl;
     cout << "Median cost: " << a1_median_cost << endl;
     cout << "Average cost: " << a1_average_cost << endl;
 
-    cout << "GBFS" << endl;
-    cout << "Median nodes: " << gbfs_median_nodes << endl;
-    cout << "Average nodes: " << gbfs_average_nodes << endl;
-    cout << "Median cost: " << gbfs_median_cost << endl;
-    cout << "Average cost: " << gbfs_average_cost << endl;
+
     
     vector<int> a1_nodes_low(starts.size());
     vector<int> a1_cost_low(starts.size());
@@ -238,7 +235,6 @@ int main(int argc, char **argv)
     double gbfs_average_cost_low = compute_average(gbfs_cost_low);
 
     cout << "==Low-G==" << endl;
-    cout << "Weighted A Star, weight = " << weight << endl;
     cout << "Median nodes: " << a1_median_nodes_low << endl;
     cout << "Average nodes: " << a1_average_nodes_low << endl;
     cout << "Median cost: " << a1_median_cost_low << endl;
@@ -280,14 +276,13 @@ int main(int argc, char **argv)
     double gbfs_average_cost_high = compute_average(gbfs_cost_high);
 
     cout << "==High-G==" << endl;
-    cout << "Weighted A Star, weight = " << weight << endl;
     cout << "Median nodes: " << a1_median_nodes_high << endl;
     cout << "Average nodes: " << a1_average_nodes_high << endl;
     cout << "Median cost: " << a1_median_cost_high << endl;
     cout << "Average cost: " << a1_average_cost_high << endl;
 
     nodes = compute_percent(a1_nodes, a1_nodes_low, a1_nodes_high);
-    costs = compute_percent(a1_cost, a1_cost_low, a1_cost_high);
+    cost = compute_percent(a1_cost, a1_cost_low, a1_cost_high);
 
     gbfs_percent_nodes = compute_percent(gbfs_nodes. gbfs_nodes_low, gbfs_nodes_high);
     gbfs_percent_cost = compute_percent(gbfs_cost, gbfs_cost_low, gbfs_cost_high);
@@ -325,21 +320,40 @@ int main(int argc, char **argv)
 
     // }
 
-    cout << "WEIGHTED  A STAR, weights = " << weight << endl;
-    cout << "Node expansions" << endl;
+    cout << "Percent Node expansions" << endl;
     cout << "Default Low-G High-G" << endl;
     cout << nodes[0] << "\t" << nodes[1] << "\t" <<  nodes[2] << endl;
 
-    cout << "Cost" << endl;
+    cout << "Percent Cost" << endl;
     cout << "Default Low-G High-G" << endl;
     cout << cost[0] << "\t" << cost[1] << "\t" << cost[2] << endl;
 
+    cout << "===========" << endl;
     cout << "GBFS" << endl;
-    cout << "Node expansions" << endl;
+
+    cout << "==Default==" << endl;
+    cout << "Median nodes: " << gbfs_median_nodes << endl;
+    cout << "Average nodes: " << gbfs_average_nodes << endl;
+    cout << "Median cost: " << gbfs_median_cost << endl;
+    cout << "Average cost: " << gbfs_average_cost << endl;
+
+    cout << "==Low-G==" << endl;
+    cout << "Median nodes: " << gbfs_median_nodes_low << endl;
+    cout << "Average nodes: " << gbfs_average_nodes_low << endl;
+    cout << "Median cost: " << gbfs_median_cost_low << endl;
+    cout << "Average cost: " << gbfs_average_cost_low << endl;
+
+    cout << "==High-G==" << endl;
+    cout << "Median nodes: " << gbfs_median_nodes_high << endl;
+    cout << "Average nodes: " << gbfs_average_nodes_high << endl;
+    cout << "Median cost: " << gbfs_median_cost_high << endl;
+    cout << "Average cost: " << gbfs_average_cost_high << endl;
+    
+    cout << "Percent Node expansions" << endl;
     cout << "Default Low-G High-G" << endl;
     cout << gbfs_percent_nodes[0] << "\t" << gbfs_percent_nodes[1] << "\t" <<  gbfs_percent_nodes[2] << endl;
 
-    cout << "Cost" << endl;
+    cout << "Percent Cost" << endl;
     cout << "Default Low-G High-G" << endl;
     cout << gbfs_percent_cost[0] << "\t" << gbfs_percent_cost[1] << "\t" << gbfs_percent_cost[2] << endl;
 
