@@ -519,8 +519,8 @@ NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
     double min_val = getNode(open_list_heap[0]).eval;
     double min_g = getNode(open_list_heap[0]).g_cost;
 
-    std::vector<int> tied_g_vals;
-    int tie_g_count = 0;
+    // std::vector<int> tied_g_vals;
+    // int tie_g_count = 0;
 
 
     if (open_list_heap.size() > 1) {
@@ -535,12 +535,12 @@ NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
                     min_val = cur_node.eval;
                     min_g = cur_node.g_cost;
                     min_idx = i;
-                    tied_g_vals.clear();
-                    tied_g_vals.push_back(i);
-                    tie_g_count = 1;
-                } else if (cur_node.g_cost == min_g) {
-                    tied_g_vals.push_back(i);
-                    tie_g_count++;
+                    // tied_g_vals.clear();
+                    // tied_g_vals.push_back(i);
+                    // tie_g_count = 1;
+                // } else if (cur_node.g_cost == min_g) {
+                //     tied_g_vals.push_back(i);
+                //     tie_g_count++;
                 }
 
             } else {
@@ -549,13 +549,13 @@ NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
         }
     }
 
-    if (tie_g_count > 1) {
-        std::srand(time(0));
-        int r = (std::rand() % (tie_g_count));
-        min_idx = tied_g_vals[r];
-        // std::cout << r << std::endl;
-        // std::cout << "Tie g count: " << tie_g_count << std::endl;
-    }
+    // if (tie_g_count > 1) {
+    //     std::srand(time(0));
+    //     int r = (std::rand() % (tie_g_count));
+    //     min_idx = tied_g_vals[r];
+    //     // std::cout << r << std::endl;
+    //     // std::cout << "Tie g count: " << tie_g_count << std::endl;
+    // }
 
 
     NodeID best_id = open_list_heap[min_idx];
