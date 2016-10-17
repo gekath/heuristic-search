@@ -144,13 +144,15 @@ int main(int argc, char **argv)
     gbfs_high.setHeuristic(&manhattan);
 
     a_1.setTieBreaker(0);
-    a_1.setTieBreaker(1);
-    a_1.setTieBreaker(2);
+    a_low.setTieBreaker(1);
+    a_high.setTieBreaker(2);
     gbfs.setTieBreaker(0);
     gbfs_low.setTieBreaker(1);
     gbfs_high.setTieBreaker(2);
 
     a_1.setWeights(weight);
+    a_low.setWeights(weight);
+    a_high.setWeights(weight);
 
     vector<BlankSlide> solution;
 
