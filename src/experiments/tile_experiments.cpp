@@ -221,7 +221,7 @@ int main(int argc, char **argv)
         a1_nodes_low[i] = a_low.getGoalTestCount();
         // gbfs_nodes_low[i] = gbfs_low.getGoalTestCount();
 
-        cur_cost = a_low.getLastPlanCost();
+        int cur_cost = a_low.getLastPlanCost();
         a1_cost_low[i] = cur_cost;
         // gbfs_cost_low[i] = gbfs_low.getLastPlanCost();
 
