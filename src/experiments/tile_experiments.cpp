@@ -169,6 +169,9 @@ int main(int argc, char **argv)
 
     cout << "here" << endl;
 
+    unsigned int highest_cost_idx = 0;
+    int highest_cost = -1;
+
     for(unsigned i = 0; i < starts.size(); i++) {
         TilePuzzleState start_state(starts[i], 3, 4);
 
@@ -178,10 +181,19 @@ int main(int argc, char **argv)
         a1_nodes[i] = a_1.getGoalTestCount();
         // gbfs_nodes[i] = gbfs.getGoalTestCount();
 
-        a1_cost[i] = a_1.getLastPlanCost();
+        int cur_cost = a_1.getLastPlanCost();
+        a1_cost[i] = cur_cost;
         // gbfs_cost[i] = gbfs.getLastPlanCost();
 
+        if (cur_cost > highest_cost) {
+            highest_cost_idx = i;
+            highest_cost = cur_cost;
+        }
+
     }
+
+    cout << "Problem: " << highest_cost_idx << endl;
+    
 
     double a1_median_nodes = compute_median(a1_nodes);
     // double gbfs_median_nodes = compute_median(gbfs_nodes);
@@ -209,9 +221,6 @@ int main(int argc, char **argv)
     // vector<int> gbfs_nodes_low(starts_low.size());
     // vector<int> gbfs_cost_low(starts_low.size());
 
-    unsigned int highest_cost_idx = 0;
-    int highest_cost = -1;
-
     for(unsigned i = 0; i < starts_low.size(); i++) {
         TilePuzzleState start_state_low(starts_low[i], 3, 4);
 
@@ -225,14 +234,10 @@ int main(int argc, char **argv)
         a1_cost_low[i] = cur_cost;
         // gbfs_cost_low[i] = gbfs_low.getLastPlanCost();
 
-        if (cur_cost > highest_cost) {
-            highest_cost_idx = i;
-            highest_cost = cur_cost;
-        }
+
 
     }
 
-    cout << "Problem: " << highest_cost_idx << endl;
 
     double a1_median_nodes_low = compute_median(a1_nodes_low);
     // double gbfs_median_nodes_low = compute_median(gbfs_nodes_low);
