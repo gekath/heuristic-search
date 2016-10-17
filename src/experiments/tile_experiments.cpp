@@ -23,6 +23,7 @@ using namespace std;
 
 double compute_median(vector<int> scores);
 double compute_average(vector<int> scores);
+vector<double> compute_percent(vector<int> a1_nodes, vector<int> a1_nodes_low, vector<int> a1_nodes_high);
 
 double compute_median(vector<int> scores) {
 
@@ -52,6 +53,36 @@ double compute_average(vector<int> scores) {
 
     return sum / size;
 
+}
+
+vector<double> compute_percent(vector<int> a1_nodes, vector<int> a1_nodes_low, vector<int> a1_nodes_high) {
+    
+    vector<double> finals(3);
+
+    unsigned int i;
+    double default_count = 0;
+    double low_g_count = 0;
+    double high_g_count = 0;
+
+    for (i = 0; i < a1_nodes.size(); i++) {
+
+        int min_val = min({a1_nodes[i], a1_nodes_low[i], a1_nodes_high[i]});
+
+        if (a1_nodes[i] == min_val) {
+            default_count++;
+        } else if (a1_nodes_low[i] == min_val) {
+            low_g_count++;
+        } else if (a1_nodes_high[i] == min_val) {
+            high_g_count++;
+        }               
+        // cout << default_nodes[i] << "\t" << low_g_nodes[i] << "\t" << high_g_nodes[i] << endl; 
+    }
+    
+    finals[0] = default_count;
+    finals[1] = low_g_count;
+    finals[2] = high_g_count;
+
+    return finals; 
 }
 
 int main(int argc, char **argv)
@@ -255,47 +286,62 @@ int main(int argc, char **argv)
     cout << "Median cost: " << a1_median_cost_high << endl;
     cout << "Average cost: " << a1_average_cost_high << endl;
 
-    unsigned int i;
-    double default_count = 0;
-    double low_g_count = 0;
-    double high_g_count = 0;
+    nodes = compute_percent(a1_nodes, a1_nodes_low, a1_nodes_high);
+    costs = compute_percent(a1_cost, a1_cost_low, a1_cost_high);
 
-    double default_count_cost = 0;
-    double low_g_count_cost = 0;
-    double high_g_count_cost = 0;
-    for (i = 0; i < a1_nodes.size(); i++) {
+    gbfs_percent_nodes = compute_percent(gbfs_nodes. gbfs_nodes_low, gbfs_nodes_high);
+    gbfs_percent_cost = compute_percent(gbfs_cost, gbfs_cost_low, gbfs_cost_high);
 
-        int min_val = min({a1_nodes[i], a1_nodes_low[i], a1_nodes_high[i]});
+    // unsigned int i;
+    // double default_count = 0;
+    // double low_g_count = 0;
+    // double high_g_count = 0;
 
-        if (a1_nodes[i] == min_val) {
-            default_count++;
-        } else if (a1_nodes_low[i] == min_val) {
-            low_g_count++;
-        } else if (a1_nodes_high[i] == min_val) {
-            high_g_count++;
-        }         
+    // double default_count_cost = 0;
+    // double low_g_count_cost = 0;
+    // double high_g_count_cost = 0;
+    // for (i = 0; i < a1_nodes.size(); i++) {
 
-        int min_cost = min({a1_cost[i], a1_cost_low[i], a1_cost_high[i]});
+    //     int min_val = min({a1_nodes[i], a1_nodes_low[i], a1_nodes_high[i]});
 
-        if (a1_cost[i] == min_cost) {
-            default_count_cost++;
-        } else if (a1_cost_low[i] == min_cost) {
-            low_g_count_cost++;
-        } else if (a1_cost_high[i] == min_cost) {
-            high_g_count_cost++;
-        }         
-        // cout << default_nodes[i] << "\t" << low_g_nodes[i] << "\t" << high_g_nodes[i] << endl; 
+    //     if (a1_nodes[i] == min_val) {
+    //         default_count++;
+    //     } else if (a1_nodes_low[i] == min_val) {
+    //         low_g_count++;
+    //     } else if (a1_nodes_high[i] == min_val) {
+    //         high_g_count++;
+    //     }         
 
-    }
+    //     int min_cost = min({a1_cost[i], a1_cost_low[i], a1_cost_high[i]});
 
+    //     if (a1_cost[i] == min_cost) {
+    //         default_count_cost++;
+    //     } else if (a1_cost_low[i] == min_cost) {
+    //         low_g_count_cost++;
+    //     } else if (a1_cost_high[i] == min_cost) {
+    //         high_g_count_cost++;
+    //     }         
+    //     // cout << default_nodes[i] << "\t" << low_g_nodes[i] << "\t" << high_g_nodes[i] << endl; 
+
+    // }
+
+    cout << "WEIGHTED  A STAR, weights = " << weight << endl;
     cout << "Node expansions" << endl;
     cout << "Default Low-G High-G" << endl;
-    cout << default_count << "\t" << low_g_count << "\t" <<  high_g_count << endl;
+    cout << nodes[0] << "\t" << nodes[1] << "\t" <<  nodes[2] << endl;
 
     cout << "Cost" << endl;
     cout << "Default Low-G High-G" << endl;
-    cout << default_count_cost << "\t" << low_g_count_cost << "\t" << high_g_count_cost << endl;
+    cout << cost[0] << "\t" << cost[1] << "\t" << cost[2] << endl;
 
+    cout << "GBFS" << endl;
+    cout << "Node expansions" << endl;
+    cout << "Default Low-G High-G" << endl;
+    cout << gbfs_percent_nodes[0] << "\t" << gbfs_percent_nodes[1] << "\t" <<  gbfs_percent_nodes[2] << endl;
+
+    cout << "Cost" << endl;
+    cout << "Default Low-G High-G" << endl;
+    cout << gbfs_percent_cost[0] << "\t" << gbfs_percent_cost[1] << "\t" << gbfs_percent_cost[2] << endl;
 
 
 
