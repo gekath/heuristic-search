@@ -104,6 +104,24 @@ int main(int argc, char **argv)
 
     }
 
+
+    starts.clear();
+    goals.clear();
+    read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/empty_grid.probs", starts, goals);
+    a_star.setTieBreaker(tieBreaker);
+
+    for(unsigned i = 0; i < starts.size(); i++) {
+
+        goal_test.setGoal(goals[i]);
+        manhattan.setGoal(goals[i]);
+
+        a_star.getPlan(starts[i], solution);
+
+        cout << a_star.getLastPlanCost() << "\t" << a_star.getGoalTestCount() << "\t" << a_star.getUniqueGoalTests()
+                << endl;
+
+    }
+
     // cout << "Weighted A* Star Search" << endl;
 
     // starts.clear();
