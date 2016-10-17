@@ -14,6 +14,9 @@
 #include "node_table.h"
 #include <stdio.h>
 #include <iostream>
+#include <time.h>
+#include <stdlib.h>
+#include <vector>
 
 typedef unsigned BFSOpenLocation; ///< The location of a node in the open list heap.
 
@@ -362,6 +365,8 @@ NodeID OpenClosedList<state_t, action_t>::addLowGToOpen(const state_t& state, co
         } else if (fp_less(g, getNode(open_list_heap[i]).g_cost)){
             // std::cout << "here" << std::endl;
             break;
+        } else if (fp_equal(g, getNode(open_list_heap[i]).g_cost)) {
+            // Create list, pick randomly
         }
     }
 
@@ -514,6 +519,10 @@ NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
     double min_val = getNode(open_list_heap[0]).eval;
     double min_g = getNode(open_list_heap[0]).g_cost;
 
+    std::vector<int> tied_g_vals;
+    int tie_g_count = 0;
+
+
     if (open_list_heap.size() > 1) {
         for (i = 1; i < open_list_heap.size(); i++) {
             BFSNode<state_t, action_t> cur_node = getNode(open_list_heap[i]);
@@ -526,12 +535,28 @@ NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
                     min_val = cur_node.eval;
                     min_g = cur_node.g_cost;
                     min_idx = i;
-                } 
+                    tied_g_vals.clear();
+                    tied_g_vals.push_back(i);
+                    tie_g_count = 1;
+                } else if (cur_node.g_cost == min_g) {
+                    tied_g_vals.push_back(i);
+                    tie_g_count++;
+                }
+
             } else {
                 break;
             }
         }
     }
+
+    if (tie_g_count > 1) {
+        std::srand(time(0));
+        int r = (std::rand() % (tie_g_count));
+        min_idx = tied_g_vals[r];
+        // std::cout << r << std::endl;
+        // std::cout << "Tie g count: " << tie_g_count << std::endl;
+    }
+
 
     NodeID best_id = open_list_heap[min_idx];
     node_table[best_id].in_open = false;
