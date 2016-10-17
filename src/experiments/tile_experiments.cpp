@@ -193,7 +193,7 @@ int main(int argc, char **argv)
     double a1_median_nodes = compute_median(a1_nodes);
     double a2_median_nodes = compute_median(a2_nodes);
     double a5_median_nodes = compute_median(a5_nodes);
-    double a10_median_nodes = compute_median(a19_nodes); 
+    double a10_median_nodes = compute_median(a10_nodes); 
     double a100_median_nodes = compute_median(a100_nodes);
     double gbfs_median_nodes = compute_median(gbfs_nodes);
 
@@ -217,6 +217,23 @@ int main(int argc, char **argv)
     double a10_average_cost = compute_average(a10_cost);
     double a100_average_cost = compute_average(a100_cost);
     double gbfs_average_cost = compute_average(gbfs_cost);
+
+    cout << "Median nodes: " << endl;
+    cout << a1_median_nodes << "\t" << a2_median_nodes << "\t" << a5_median_nodes << "\t" 
+            << a10_median_nodes << "\t" << a100_median_nodes << "\t" << gbfs_median_nodes << endl;
+
+    cout << "Average nodes: " << endl;
+    cout << a1_average_nodes << "\t" << a2_average_nodes << "\t" << a5_average_nodes << "\t" 
+            << a10_average_nodes << "\t" << a100_average_nodes << "\t" << gbfs_average_nodes << endl;
+
+    cout << "Median Cost: " << endl;
+    cout << a1_median_cost << "\t" << a2_median_cost << "\t" << a5_median_cost << "\t" 
+            << a10_median_cost << "\t" << a100_median_cost << "\t" << gbfs_median_cost << endl;
+
+    cout << "Average cost: " << endl;
+    cout << a1_average_cost << "\t" << a2_average_cost << "\t" << a5_average_cost << "\t" 
+            << a10_average_cost << "\t" << a100_average_cost << "\t" << gbfs_average_cost << endl;
+            
 
     return 0;
 }
