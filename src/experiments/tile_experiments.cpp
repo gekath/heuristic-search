@@ -156,7 +156,6 @@ int main(int argc, char **argv)
 
     vector<vector<unsigned> > starts;
 
-    starts.clear();
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
 
     vector<int> a1_nodes(starts.size());
@@ -176,6 +175,8 @@ int main(int argc, char **argv)
         a1_cost[i] = a_1.getLastPlanCost();
         gbfs_cost[i] = gbfs.getLastPlanCost();
 
+        cout << a1_nodes[i] << "\t" << gbfs_cost[i] << endl;
+
     }
 
     double a1_median_nodes = compute_median(a1_nodes);
@@ -190,7 +191,6 @@ int main(int argc, char **argv)
     double a1_average_cost = compute_average(a1_cost);
     double gbfs_average_cost = compute_average(gbfs_cost);
 
-
     cout << "Weighted A Star, weight = " << weight << endl;
     cout << "==Default==" << endl;
     cout << "Median nodes: " << a1_median_nodes << endl;
@@ -198,14 +198,11 @@ int main(int argc, char **argv)
     cout << "Median cost: " << a1_median_cost << endl;
     cout << "Average cost: " << a1_average_cost << endl;
 
-
-    
     vector<int> a1_nodes_low(starts.size());
     vector<int> a1_cost_low(starts.size());
     vector<int> gbfs_nodes_low(starts.size());
     vector<int> gbfs_cost_low(starts.size());
 
-    starts.clear();
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
 
     for(unsigned i = 0; i < starts.size(); i++) {
