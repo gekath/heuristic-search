@@ -209,8 +209,8 @@ int main(int argc, char **argv)
     // vector<int> gbfs_nodes_low(starts_low.size());
     // vector<int> gbfs_cost_low(starts_low.size());
 
-    unsigned int highest_cost_idx = 0
-    int highest_cost = -1
+    unsigned int highest_cost_idx = 0;
+    int highest_cost = -1;
 
     for(unsigned i = 0; i < starts_low.size(); i++) {
         TilePuzzleState start_state_low(starts_low[i], 3, 4);
