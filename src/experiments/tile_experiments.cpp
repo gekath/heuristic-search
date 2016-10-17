@@ -202,12 +202,14 @@ int main(int argc, char **argv)
     cout << "Median cost: " << a1_median_cost << endl;
     cout << "Average cost: " << a1_average_cost << endl;
 
-    vector<int> a1_nodes_low(starts.size());
-    vector<int> a1_cost_low(starts.size());
-    vector<int> gbfs_nodes_low(starts.size());
-    vector<int> gbfs_cost_low(starts.size());
+
 
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts_low);
+
+    vector<int> a1_nodes_low(starts_low.size());
+    vector<int> a1_cost_low(starts_low.size());
+    vector<int> gbfs_nodes_low(starts_low.size());
+    vector<int> gbfs_cost_low(starts_low.size());
 
     for(unsigned i = 0; i < starts_low.size(); i++) {
         TilePuzzleState start_state_low(starts_low[i], 3, 4);
@@ -242,12 +244,12 @@ int main(int argc, char **argv)
     cout << "Average cost: " << a1_average_cost_low << endl;
     
 
+    read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts_high);
     vector<int> a1_nodes_high(starts_high.size());
     vector<int> a1_cost_high(starts_high.size());
     vector<int> gbfs_nodes_high(starts_high.size());
     vector<int> gbfs_cost_high(starts_high.size());
 
-    read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts_high);
 
     for(unsigned i = 0; i < starts_high.size(); i++) {
         TilePuzzleState start_state_high(starts_high[i], 3, 4);
