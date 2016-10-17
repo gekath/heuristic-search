@@ -108,7 +108,7 @@ int main(int argc, char **argv)
     starts.clear();
     goals.clear();
     read_in_pathfinding_probs("../src/domains/map_pathfinding/map_files/empty_grid.probs", starts, goals);
-    a_star.setTieBreaker(tieBreaker);
+    a_star.setTieBreaker(tieBreaker + 1);
 
     for(unsigned i = 0; i < starts.size(); i++) {
 
