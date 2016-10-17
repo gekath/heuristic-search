@@ -190,7 +190,7 @@ int main(int argc, char **argv)
     }
 
     cout << "Problem: " << highest_cost_idx << endl;
-    cout << "Problem: " << highest_cost << endl;
+    cout << "Costs: " << highest_cost << endl;
 
 
     double a1_median_nodes = compute_median(a1_nodes);

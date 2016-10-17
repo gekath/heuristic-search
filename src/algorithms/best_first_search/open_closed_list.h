@@ -527,6 +527,8 @@ NodeID OpenClosedList<state_t, action_t>::getLowGAndClose()
                     min_g = cur_node.g_cost;
                     min_idx = i;
                 } 
+            } else {
+                break;
             }
         }
     }
