@@ -281,10 +281,10 @@ int main(int argc, char **argv)
     cout << "Median cost: " << a1_median_cost_high << endl;
     cout << "Average cost: " << a1_average_cost_high << endl;
 
-    nodes = compute_percent(a1_nodes, a1_nodes_low, a1_nodes_high);
-    cost = compute_percent(a1_cost, a1_cost_low, a1_cost_high);
+    vector<double> nodes = compute_percent(a1_nodes, a1_nodes_low, a1_nodes_high);
+    vector<double> cost = compute_percent(a1_cost, a1_cost_low, a1_cost_high);
 
-    gbfs_percent_nodes = compute_percent(gbfs_nodes. gbfs_nodes_low, gbfs_nodes_high);
+    gbfs_percent_nodes = compute_percent(gbfs_nodes, gbfs_nodes_low, gbfs_nodes_high);
     gbfs_percent_cost = compute_percent(gbfs_cost, gbfs_cost_low, gbfs_cost_high);
 
     // unsigned int i;
