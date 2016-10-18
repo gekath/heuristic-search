@@ -141,7 +141,7 @@ int main(int argc, char **argv)
     a_low.setWeights(weight);
 
     a_1.setReopen(1);
-    a_1.setReopen(0);
+    a_low.setReopen(0);
 
     vector<BlankSlide> solution;
     vector<vector<unsigned> > starts;
