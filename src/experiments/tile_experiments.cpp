@@ -163,7 +163,7 @@ int main(int argc, char **argv)
         a_1.getPlan(start_state, solution);
 
         int re_nodes = a_1.getGoalTestCount();
-        int re_cost = a1.getLastPlanCost();
+        int re_cost = a_1.getLastPlanCost();
 
         int nore_nodes = a_low.getGoalTestCount();
         int nore_cost = a_low.getLastPlanCost();
