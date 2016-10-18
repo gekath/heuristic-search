@@ -267,13 +267,12 @@ BfsExpansionResult BestFirstSearch<state_t, action_t>::nodeExpansion()
                 open_closed_list.getNode(child_id).parent_id = to_expand_id;
                 open_closed_list.getNode(child_id).gen_action = app_actions[i];
 
-                if(child_loc == StateLocation::open) {
+                if(child_loc == StateLocation::open)
                     open_closed_list.openNodeEvalChanged(child_id);
-                // } else{
-                    // if (reopen == 1) {
-                    //     open_closed_list.reopenNode(child_id);
-                    // }
-                } 
+                // else
+                //     open_closed_list.reopenNode(child_id);
+                    
+                
             }
         } else {
 
