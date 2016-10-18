@@ -161,6 +161,7 @@ int main(int argc, char **argv)
         TilePuzzleState start_state(starts[i], 3, 4);
 
         a_1.getPlan(start_state, solution);
+        a_low.getPlan(start_state, solution);
 
         int re_nodes = a_1.getGoalTestCount();
         int re_cost = a_1.getLastPlanCost();
