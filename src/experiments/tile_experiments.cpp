@@ -168,6 +168,8 @@ int main(int argc, char **argv)
         int nore_nodes = a_low.getGoalTestCount();
         int nore_cost = a_low.getLastPlanCost();
 
+        cout << re_nodes << "\t" << nore_nodes << endl;
+
         if (re_nodes < nore_nodes) {
             re_node_less++;
         } else if (re_nodes == nore_nodes) {
