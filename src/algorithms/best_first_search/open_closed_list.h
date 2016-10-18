@@ -511,11 +511,11 @@ NodeID OpenClosedList<state_t, action_t>::getBestNodeAndClose()
             } else if (cur_node.eval == min_val) {
                 tied_g_vals.push_back(i);
                 tie_g_count++;
-                }
+        
 
             } else {
                 break;
-            }
+            } 
         }
     }
 
