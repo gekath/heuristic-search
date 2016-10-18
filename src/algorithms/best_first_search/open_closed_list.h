@@ -527,14 +527,14 @@ NodeID OpenClosedList<state_t, action_t>::getBestNodeAndClose()
         // std::cout << "Tie g count: " << tie_g_count << std::endl;
     }
 
-    NodeID best_id = open_list_heap[0];
+    NodeID best_id = open_list_heap[min_idx];
     node_table[best_id].in_open = false;
 
-    open_list_heap[0] = open_list_heap.back();
-    node_table.getNode(open_list_heap[0]).location = 0;
+    open_list_heap[min_idx] = open_list_heap.back();
+    node_table.getNode(open_list_heap[min_idx]).location = 0;
     open_list_heap.pop_back();
 
-    heapifyDown(0);
+    heapifyDown(min_idx);
 
     return best_id;
 }
