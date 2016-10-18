@@ -172,7 +172,7 @@ int main(int argc, char **argv)
 
     double median_nodes = compute_median(node_count);
     double average_nodes = compute_average(node_count);
-    double variance_nodes = compute_variance(node_count);
+    double variance_nodes = compute_variance(node_count, average_nodes);
     // double median_cost = compute_median(cost_count);
     // double average_cost = compute_average(cost_count);
 
