@@ -162,11 +162,11 @@ int main(int argc, char **argv)
 
         a_1.getPlan(start_state, solution);
 
-        re_nodes = a_1.getGoalTestCount();
-        re_cost = a1.getLastPlanCost();
+        int re_nodes = a_1.getGoalTestCount();
+        int re_cost = a1.getLastPlanCost();
 
-        nore_nodes = a_low.getGoalTestCount();
-        nore_cost = a_low.getLastPlanCost();
+        int nore_nodes = a_low.getGoalTestCount();
+        int nore_cost = a_low.getLastPlanCost();
 
         if (re_nodes < nore_nodes) {
             re_node_less++;
