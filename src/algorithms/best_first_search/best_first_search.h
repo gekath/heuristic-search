@@ -67,6 +67,8 @@ public:
     BestFirstSearch();
     virtual ~BestFirstSearch();
 
+    int reopen;
+
     /**
      * Sets the hash function used by the search.
      *
@@ -80,6 +82,8 @@ public:
      * @param heur A pointer to the heuristic function to use.
      */
     void setHeuristic(Heuristic<state_t> *heur);
+
+    void setReopen(int is_reopen);
 
     void setTieBreaker(int tiebreaker);
 
@@ -155,6 +159,12 @@ template<class state_t, class action_t>
 inline void BestFirstSearch<state_t, action_t>::setHeuristic(Heuristic<state_t>* heur)
 {
     heur_func = heur;
+}
+
+template<class state_t, class action_t>
+inline void BestFirstSearch<state_t, action_t>::setReopen(int is_reopen)
+{
+    reopen = is_reopen;
 }
 
 template<class state_t, class action_t>
@@ -260,7 +270,9 @@ BfsExpansionResult BestFirstSearch<state_t, action_t>::nodeExpansion()
                 if(child_loc == StateLocation::open)
                     open_closed_list.openNodeEvalChanged(child_id);
                 else
-                    open_closed_list.reopenNode(child_id);
+                    if (reopen == 1) {
+                        open_closed_list.reopenNode(child_id);
+                    }
             }
         } else {
 

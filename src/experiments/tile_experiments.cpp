@@ -114,73 +114,96 @@ int main(int argc, char **argv)
     }
 
     WeightedAStar<TilePuzzleState, BlankSlide> a_1;
-    // WeightedAStar<TilePuzzleState, BlankSlide> a_low;
-    // WeightedAStar<TilePuzzleState, BlankSlide> a_high;
+    WeightedAStar<TilePuzzleState, BlankSlide> a_low;
 
     TilePuzzleTransitions tile_ops(3, 4);
     a_1.setTransitionSystem(&tile_ops);
-    // a_low.setTransitionSystem(&tile_ops);
-    // a_high.setTransitionSystem(&tile_ops);
+    a_low.setTransitionSystem(&tile_ops);
 
     TilePuzzleState goal_state(3, 4);
 
     SingleGoalTest<TilePuzzleState> goal_test(goal_state);
     a_1.setGoalTest(&goal_test);
-    // a_low.setGoalTest(&goal_test);
-    // a_high.setGoalTest(&goal_test);
+    a_low.setGoalTest(&goal_test);
 
     PermutationHashFunction<TilePuzzleState> tile_hash;
     a_1.setHashFunction(&tile_hash);
-    // a_low.setHashFunction(&tile_hash);
-    // a_high.setHashFunction(&tile_hash);
+    a_low.setHashFunction(&tile_hash);
 
     TileManhattanDistance manhattan(goal_state, tile_ops);
     a_1.setHeuristic(&manhattan);
-    // a_low.setHeuristic(&manhattan);
-    // a_high.setHeuristic(&manhattan);
+    a_low.setHeuristic(&manhattan);
 
     a_1.setTieBreaker(tiebreaker);
-    // a_low.setTieBreaker(1);
-    // a_high.setTieBreaker(2);
+    a_low.setTieBreaker(tiebreaker);
 
     a_1.setWeights(weight);
-    // a_low.setWeights(weight);
-    // a_high.setWeights(weight);
+    a_low.setWeights(weight);
+
+    a_1.setReopen(1);
+    a_1.setReopen(0);
 
     vector<BlankSlide> solution;
     vector<vector<unsigned> > starts;
 
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
 
-    // vector<int> node_count(starts.size());
-    // vector<int> cost_count(starts.size());
+    int re_node_less = 0;
+    int re_node_greater = 0;
+    int re_node_equal = 0;
 
-    vector<int> node_count(100);
-    vector<int> cost_count(100);
+    int re_cost_less = 0;
+    int re_cost_greater = 0;
+    int re_cost_equal = 0;
+    
+    for (unsigned i = 0; i < starts.size(); i++) {        
 
-    for (unsigned i = 0; i < 100; i++) {        
-
-        TilePuzzleState start_state(starts[27], 3, 4);
+        TilePuzzleState start_state(starts[i], 3, 4);
 
         a_1.getPlan(start_state, solution);
 
-        node_count[i] = a_1.getGoalTestCount();
+        re_nodes = a_1.getGoalTestCount();
+        re_cost = a1.getLastPlanCost();
 
-        cost_count[i] = a_1.getLastPlanCost();
+        nore_nodes = a_low.getGoalTestCount();
+        nore_cost = a_low.getLastPlanCost();
+
+        if (re_nodes < nore_nodes) {
+            re_node_less++;
+        } else if (re_nodes == nore_nodes) {
+            re_node_equal++;
+        } else {
+            re_node_greater++;
+        }
+
+        if (re_cost < nore_cost) {
+            re_cost_less++;
+        } else if (re_cost == nore_cost) {
+            re_cost_equal++;
+        } else {
+            re_cost_greater++;
+        }
 
     }
 
-    double median_nodes = compute_median(node_count);
-    double average_nodes = compute_average(node_count);
-    double variance_nodes = compute_variance(node_count, average_nodes);
-    // double median_cost = compute_median(cost_count);
-    // double average_cost = compute_average(cost_count);
+    cout << re_node_less << endl;
+    cout << re_node_greater << endl;
+    cout << re_node_equal << endl;
+    cout << re_cost_less << endl;
+    cout << re_cost_greater << endl;
+    cout << re_cost_equal << endl;
+
+    // double median_nodes = compute_median(node_count);
+    // double average_nodes = compute_average(node_count);
+    // double variance_nodes = compute_variance(node_count, average_nodes);
+    // // double median_cost = compute_median(cost_count);
+    // // double average_cost = compute_average(cost_count);
 
 
-    cout << "Weighted A Star, weight = " << weight << endl;
-    cout << "Median nodes: " << median_nodes << endl;
-    cout << "Average nodes: " << average_nodes << endl;
-    cout << "Variance nodes: " << variance_nodes << endl;
+    // cout << "Weighted A Star, weight = " << weight << endl;
+    // cout << "Median nodes: " << median_nodes << endl;
+    // cout << "Average nodes: " << average_nodes << endl;
+    // cout << "Variance nodes: " << variance_nodes << endl;
     // cout << "Median cost: " << median_cost << endl;
     // cout << "Average cost: " << average_cost << endl;
 
