@@ -500,7 +500,7 @@ NodeID OpenClosedList<state_t, action_t>::getBestNodeAndClose()
     int tie_g_count = 0;
 
     if (open_list_heap.size() > 1) {
-        for (i = 1; i < open_list_heap.size(); i++) {
+        for (unsigned i = 1; i < open_list_heap.size(); i++) {
             BFSNode<state_t, action_t> cur_node = getNode(open_list_heap[i]);
             if (cur_node.eval < min_val) {
                 min_val = cur_node.eval;
@@ -524,7 +524,7 @@ NodeID OpenClosedList<state_t, action_t>::getBestNodeAndClose()
         // std::cout << r << std::endl;
         // std::cout << "Tie g count: " << tie_g_count << std::endl;
     }
-    
+
     NodeID best_id = open_list_heap[0];
     node_table[best_id].in_open = false;
 
