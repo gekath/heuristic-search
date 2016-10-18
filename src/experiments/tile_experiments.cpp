@@ -152,14 +152,15 @@ int main(int argc, char **argv)
 
     read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts);
 
-    vector<int> node_count(starts.size());
-    vector<int> cost_count(starts.size());
-    vector<int> gbfs_nodes(starts.size());
-    vector<int> gbfs_cost(starts.size());
+    // vector<int> node_count(starts.size());
+    // vector<int> cost_count(starts.size());
 
-    for (unsigned i = 0; i < starts.size(); i++) {        
+    vector<int> node_count(100);
+    vector<int> cost_count(100);
 
-        TilePuzzleState start_state(starts[i], 3, 4);
+    for (unsigned i = 0; i < 100; i++) {        
+
+        TilePuzzleState start_state(starts[27], 3, 4);
 
         a_1.getPlan(start_state, solution);
 
@@ -171,15 +172,17 @@ int main(int argc, char **argv)
 
     double median_nodes = compute_median(node_count);
     double average_nodes = compute_average(node_count);
-    double median_cost = compute_median(cost_count);
-    double average_cost = compute_average(cost_count);
+    double variance_nodes = compute_variance(node_count);
+    // double median_cost = compute_median(cost_count);
+    // double average_cost = compute_average(cost_count);
 
 
     cout << "Weighted A Star, weight = " << weight << endl;
     cout << "Median nodes: " << median_nodes << endl;
     cout << "Average nodes: " << average_nodes << endl;
-    cout << "Median cost: " << median_cost << endl;
-    cout << "Average cost: " << average_cost << endl;
+    cout << "Variance nodes: " << variance_nodes << endl;
+    // cout << "Median cost: " << median_cost << endl;
+    // cout << "Average cost: " << average_cost << endl;
 
     // read_in_permutations("../src/domains/tile_puzzle/tile_files/3x4_puzzle.probs", starts_low);
 
