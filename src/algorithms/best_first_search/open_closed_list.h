@@ -499,12 +499,14 @@ NodeID OpenClosedList<state_t, action_t>::getBestNodeAndClose()
     std::vector<int> tied_g_vals;
     int tie_g_count = 0;
 
+    int min_idx = 0;
+    double min_val = getNode(open_list_heap[0]).eval;
+
     if (open_list_heap.size() > 1) {
         for (unsigned i = 1; i < open_list_heap.size(); i++) {
             BFSNode<state_t, action_t> cur_node = getNode(open_list_heap[i]);
             if (cur_node.eval < min_val) {
                 min_val = cur_node.eval;
-                min_g = cur_node.g_cost;
                 min_idx = i;
             } else if (cur_node.eval == min_val) {
                 tied_g_vals.push_back(i);
